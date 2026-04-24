@@ -1,50 +1,50 @@
 ﻿<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
-  DTS:CreationDate="4/23/2026 3:19:38 AM"
+  DTS:CreationDate="4/24/2026 2:52:18 AM"
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="W11"
   DTS:CreatorName="W11\pande"
-  DTS:DTSID="{6C091339-3AC1-4B1F-AD18-E9CA56B2ABE7}"
+  DTS:DTSID="{4927DA6C-8EAB-45C5-9BD3-3346AC5AD01F}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="17.0.1016.0"
   DTS:LocaleID="3082"
-  DTS:ObjectName="Package"
+  DTS:ObjectName="DimTipoDocumento"
   DTS:PackageType="5"
-  DTS:VersionBuild="21"
-  DTS:VersionGUID="{E322FFEE-0165-473F-8913-D5F978C25BE8}">
+  DTS:VersionBuild="12"
+  DTS:VersionGUID="{55C6F570-229C-49CF-BDE7-7FD2F6F2746C}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[source.Indsermaq]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{AA6D0EE9-EAB9-4203-9971-4E0C388AE9CE}"
+      DTS:DTSID="{98438CD1-9DBC-4384-9228-381176A48F60}"
       DTS:ObjectName="source.Indsermaq">
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=w11;Initial Catalog=Indsermaq;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package-{AA6D0EE9-EAB9-4203-9971-4E0C388AE9CE}w11.Indsermaq;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=w11;Initial Catalog=Indsermaq;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{98438CD1-9DBC-4384-9228-381176A48F60}w11.Indsermaq;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[target.DW_Ventas]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{0610F4AA-AE8D-4DAD-B34B-3ADDA2193E6B}"
+      DTS:DTSID="{3003DE33-7239-45C0-90FC-981A86391882}"
       DTS:ObjectName="target.DW_Ventas">
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=w11;Initial Catalog=DW_Ventas;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package-{0610F4AA-AE8D-4DAD-B34B-3ADDA2193E6B}w11.DW_Ventas;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=w11;Initial Catalog=DW_Ventas;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{3003DE33-7239-45C0-90FC-981A86391882}w11.DW_Ventas;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
   <DTS:Variables>
     <DTS:Variable
       DTS:CreationName=""
-      DTS:DTSID="{7D41BB68-C6CD-44CF-86E8-6FF3C51C2CE1}"
+      DTS:DTSID="{592FBF29-4B9C-4D48-B164-E5584759CE4C}"
       DTS:IncludeInDebugDump="6789"
       DTS:Namespace="User"
       DTS:ObjectName="DBTS">
@@ -53,12 +53,12 @@
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
-      DTS:DTSID="{7304CE4B-C982-40F8-8B28-905AD54D7AB6}"
+      DTS:DTSID="{D43AD09C-7ADE-4658-A28E-125864B7E0D6}"
       DTS:IncludeInDebugDump="6789"
       DTS:Namespace="User"
       DTS:ObjectName="LastRowVersion">
       <DTS:VariableValue
-        DTS:DataType="3">0</DTS:VariableValue>
+        DTS:DataType="20">0</DTS:VariableValue>
     </DTS:Variable>
   </DTS:Variables>
   <DTS:Executables>
@@ -66,7 +66,7 @@
       DTS:refId="Package\clean staging area"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Tarea Ejecutar SQL"
-      DTS:DTSID="{B2504F68-0C01-4A0D-9247-D245D4DE6C59}"
+      DTS:DTSID="{b04f6283-2131-407c-a13c-47632897941e}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="clean staging area"
@@ -75,15 +75,15 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{0610F4AA-AE8D-4DAD-B34B-3ADDA2193E6B}"
-          SQLTask:SqlStatementSource="TRUNCATE Table staging.Sucursal" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:Connection="{3003DE33-7239-45C0-90FC-981A86391882}"
+          SQLTask:SqlStatementSource="TRUNCATE Table staging.TipoDocumento" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
       DTS:refId="Package\get database row version"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Tarea Ejecutar SQL"
-      DTS:DTSID="{E0A4F610-2FB2-4C7C-878D-D31901454E02}"
+      DTS:DTSID="{2298250d-263f-43aa-b09a-f273044d13b3}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="get database row version"
@@ -92,7 +92,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{AA6D0EE9-EAB9-4203-9971-4E0C388AE9CE}"
+          SQLTask:Connection="{98438CD1-9DBC-4384-9228-381176A48F60}"
           SQLTask:SqlStatementSource="EXEC [dbo].[GetDatabaseRowVersion]"
           SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ResultBinding
@@ -105,7 +105,7 @@
       DTS:refId="Package\get store row version"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Tarea Ejecutar SQL"
-      DTS:DTSID="{850DDD06-1644-47E8-88A5-B7CFCE691359}"
+      DTS:DTSID="{f531c20b-0252-4849-88ec-544d3206b61f}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="get store row version"
@@ -114,8 +114,8 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{0610F4AA-AE8D-4DAD-B34B-3ADDA2193E6B}"
-          SQLTask:SqlStatementSource="EXEC [dbo].[GetLastPackageRowVersion] @tableName = 'sucursal'"
+          SQLTask:Connection="{3003DE33-7239-45C0-90FC-981A86391882}"
+          SQLTask:SqlStatementSource="EXEC [dbo].[GetLastPackageRowVersion] @tableName = 'tipodocumento'"
           SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ResultBinding
             SQLTask:ResultName="LastRowVersion"
@@ -124,13 +124,13 @@
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
-      DTS:refId="Package\Populate DimSucursal"
+      DTS:refId="Package\populate DimTipoDocumento"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Tarea Flujo de datos"
-      DTS:DTSID="{79887667-09B1-462A-98B4-361BE0ED887B}"
+      DTS:DTSID="{906a9629-ab82-4ef4-846f-35e33e01f2d8}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
-      DTS:ObjectName="Populate DimSucursal"
+      DTS:ObjectName="populate DimTipoDocumento"
       DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
       <DTS:Variables />
       <DTS:ObjectData>
@@ -138,7 +138,7 @@
           version="1">
           <components>
             <component
-              refId="Package\Populate DimSucursal\Búsqueda"
+              refId="Package\populate DimTipoDocumento\Búsqueda"
               componentClassID="Microsoft.Lookup"
               contactInfo="Búsqueda;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;6"
               description="Combina columnas adicionales con el flujo de datos mediante la búsqueda de valores en una tabla. Por ejemplo, se combina la columna 'id. de empleado' con la tabla de empleados para obtener la 'fecha de contratación' y 'el nombre de empleado'. Se recomienda esta transformación cuando hay suficiente espacio en memoria para la tabla de búsqueda."
@@ -151,14 +151,14 @@
                   description="Especifica la instrucción SQL que genera la tabla de búsqueda."
                   expressionType="Notify"
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dw].[DimSucursal]</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dw].[DimTipoDocumento]</property>
                 <property
                   dataType="System.String"
                   description="Especifica una instrucción SQL que usa parámetros para generar la tabla de búsqueda."
                   expressionType="Notify"
                   name="SqlCommandParam"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dw].[DimSucursal]) [refTable]
-where [refTable].[CodSucursalNK] = ?</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dw].[DimTipoDocumento]) [refTable]
+where [refTable].[TipoDocumentoKey] = ?</property>
                 <property
                   dataType="System.Int32"
                   description="Especifica el tipo de conexión utilizado para tener acceso al conjunto de datos de referencia."
@@ -189,12 +189,12 @@ where [refTable].[CodSucursalNK] = ?</property>
                 <property
                   dataType="System.String"
                   description="Indica si se debe hacer referencia a metadatos en formato XML."
-                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="SucursalKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CodSucursalNK" dataType="DT_STR" length="4" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Descripcion" dataType="DT_STR" length="256" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Direccion" dataType="DT_STR" length="500" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="NIT" dataType="DT_STR" length="15" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Telefono" dataType="DT_STR" length="20" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Email" dataType="DT_STR" length="40" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Activo" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="TipoDocumentoKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CodTipoDocumentoNK" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Sigla" dataType="DT_STR" length="4" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Descripcion" dataType="DT_STR" length="128" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Pago" dataType="DT_STR" length="16" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="GlosaTipoDoc" dataType="DT_STR" length="256" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Activo" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
                 <property
                   containsID="true"
                   dataType="System.String"
                   description="Especifica la lista de identificadores de linaje que están asignados a los parámetros que usa la instrucción SQL de la propiedad SQLCommand. Las entradas de la lista están separadas por puntos y comas."
-                  name="ParameterMap">#{Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[COD_SUCURSAL]};</property>
+                  name="ParameterMap">#{Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[COD_TIPO_DOCUMENTO]};</property>
                 <property
                   dataType="System.Int32"
                   description="Especifica la página de códigos de columna para utilizar cuando la información de página de códigos no está disponible en el origen de datos."
@@ -206,7 +206,7 @@ where [refTable].[CodSucursalNK] = ?</property>
               </properties>
               <connections>
                 <connection
-                  refId="Package\Populate DimSucursal\Búsqueda.Connections[OleDbConnection]"
+                  refId="Package\populate DimTipoDocumento\Búsqueda.Connections[OleDbConnection]"
                   connectionManagerID="Package.ConnectionManagers[target.DW_Ventas]"
                   connectionManagerRefId="Package.ConnectionManagers[target.DW_Ventas]"
                   description="Administrador de conexiones utilizado para obtener acceso a los datos de búsqueda."
@@ -214,21 +214,19 @@ where [refTable].[CodSucursalNK] = ?</property>
               </connections>
               <inputs>
                 <input
-                  refId="Package\Populate DimSucursal\Búsqueda.Inputs[Entrada de búsqueda]"
+                  refId="Package\populate DimTipoDocumento\Búsqueda.Inputs[Entrada de búsqueda]"
                   name="Entrada de búsqueda">
                   <inputColumns>
                     <inputColumn
-                      refId="Package\Populate DimSucursal\Búsqueda.Inputs[Entrada de búsqueda].Columns[COD_SUCURSAL]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="4"
-                      cachedName="COD_SUCURSAL"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[COD_SUCURSAL]">
+                      refId="Package\populate DimTipoDocumento\Búsqueda.Inputs[Entrada de búsqueda].Columns[COD_TIPO_DOCUMENTO]"
+                      cachedDataType="i4"
+                      cachedName="COD_TIPO_DOCUMENTO"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[COD_TIPO_DOCUMENTO]">
                       <properties>
                         <property
                           dataType="System.String"
                           description="Especifica la columna de la tabla de referencia con la que se combina una columna."
-                          name="JoinToReferenceColumn">CodSucursalNK</property>
+                          name="JoinToReferenceColumn">TipoDocumentoKey</property>
                         <property
                           dataType="System.Null"
                           description="Especifica la columna de la tabla de referencia de la que se copia una columna."
@@ -241,54 +239,54 @@ where [refTable].[CodSucursalNK] = ?</property>
               </inputs>
               <outputs>
                 <output
-                  refId="Package\Populate DimSucursal\Búsqueda.Outputs[Salida de entradas coincidentes de búsqueda]"
+                  refId="Package\populate DimTipoDocumento\Búsqueda.Outputs[Salida de entradas coincidentes de búsqueda]"
                   errorOrTruncationOperation="Búsqueda"
                   exclusionGroup="1"
                   name="Salida de entradas coincidentes de búsqueda"
-                  synchronousInputId="Package\Populate DimSucursal\Búsqueda.Inputs[Entrada de búsqueda]">
+                  synchronousInputId="Package\populate DimTipoDocumento\Búsqueda.Inputs[Entrada de búsqueda]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Populate DimSucursal\Búsqueda.Outputs[Salida de entradas coincidentes de búsqueda].Columns[SucursalKey]"
+                      refId="Package\populate DimTipoDocumento\Búsqueda.Outputs[Salida de entradas coincidentes de búsqueda].Columns[TipoDocumentoKey]"
                       dataType="i4"
                       errorOrTruncationOperation="Copiar columna"
-                      lineageId="Package\Populate DimSucursal\Búsqueda.Outputs[Salida de entradas coincidentes de búsqueda].Columns[SucursalKey]"
-                      name="SucursalKey"
+                      lineageId="Package\populate DimTipoDocumento\Búsqueda.Outputs[Salida de entradas coincidentes de búsqueda].Columns[TipoDocumentoKey]"
+                      name="TipoDocumentoKey"
                       truncationRowDisposition="FailComponent">
                       <properties>
                         <property
                           dataType="System.String"
                           description="Especifica la columna de la tabla de referencia de la que se copia una columna."
-                          name="CopyFromReferenceColumn">SucursalKey</property>
+                          name="CopyFromReferenceColumn">TipoDocumentoKey</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
                   <externalMetadataColumns />
                 </output>
                 <output
-                  refId="Package\Populate DimSucursal\Búsqueda.Outputs[Salida de entradas no coincidentes de búsqueda]"
+                  refId="Package\populate DimTipoDocumento\Búsqueda.Outputs[Salida de entradas no coincidentes de búsqueda]"
                   description="Salida de búsqueda que trata las filas sin entradas coincidentes en el conjunto de datos de referencia. Utilice esta salida cuando la propiedad NoMatchBehavior esté establecida en 'Enviar las filas sin entradas coincidentes a la salida de entradas no coincidentes'."
                   exclusionGroup="1"
                   name="Salida de entradas no coincidentes de búsqueda"
-                  synchronousInputId="Package\Populate DimSucursal\Búsqueda.Inputs[Entrada de búsqueda]">
+                  synchronousInputId="Package\populate DimTipoDocumento\Búsqueda.Inputs[Entrada de búsqueda]">
                   <externalMetadataColumns />
                 </output>
                 <output
-                  refId="Package\Populate DimSucursal\Búsqueda.Outputs[Salida de error de búsqueda]"
+                  refId="Package\populate DimTipoDocumento\Búsqueda.Outputs[Salida de error de búsqueda]"
                   exclusionGroup="1"
                   isErrorOut="true"
                   name="Salida de error de búsqueda"
-                  synchronousInputId="Package\Populate DimSucursal\Búsqueda.Inputs[Entrada de búsqueda]">
+                  synchronousInputId="Package\populate DimTipoDocumento\Búsqueda.Inputs[Entrada de búsqueda]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Populate DimSucursal\Búsqueda.Outputs[Salida de error de búsqueda].Columns[ErrorCode]"
+                      refId="Package\populate DimTipoDocumento\Búsqueda.Outputs[Salida de error de búsqueda].Columns[ErrorCode]"
                       dataType="i4"
-                      lineageId="Package\Populate DimSucursal\Búsqueda.Outputs[Salida de error de búsqueda].Columns[ErrorCode]"
+                      lineageId="Package\populate DimTipoDocumento\Búsqueda.Outputs[Salida de error de búsqueda].Columns[ErrorCode]"
                       name="ErrorCode"
                       specialFlags="1" />
                     <outputColumn
-                      refId="Package\Populate DimSucursal\Búsqueda.Outputs[Salida de error de búsqueda].Columns[ErrorColumn]"
+                      refId="Package\populate DimTipoDocumento\Búsqueda.Outputs[Salida de error de búsqueda].Columns[ErrorColumn]"
                       dataType="i4"
-                      lineageId="Package\Populate DimSucursal\Búsqueda.Outputs[Salida de error de búsqueda].Columns[ErrorColumn]"
+                      lineageId="Package\populate DimTipoDocumento\Búsqueda.Outputs[Salida de error de búsqueda].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -297,7 +295,7 @@ where [refTable].[CodSucursalNK] = ?</property>
               </outputs>
             </component>
             <component
-              refId="Package\Populate DimSucursal\Destino de OLE DB"
+              refId="Package\populate DimTipoDocumento\Destino de OLE DB"
               componentClassID="Microsoft.OLEDBDestination"
               contactInfo="Destino de OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;4"
               description="Destino de OLE DB"
@@ -312,7 +310,7 @@ where [refTable].[CodSucursalNK] = ?</property>
                 <property
                   dataType="System.String"
                   description="Especifica el nombre del objeto de base de datos usado para abrir un conjunto de filas."
-                  name="OpenRowset">[staging].[Sucursal]</property>
+                  name="OpenRowset">[staging].[TipoDocumento]</property>
                 <property
                   dataType="System.String"
                   description="Especifica la variable que contiene el nombre del objeto de base de datos usado para abrir un conjunto de filas."
@@ -354,7 +352,7 @@ where [refTable].[CodSucursalNK] = ?</property>
               </properties>
               <connections>
                 <connection
-                  refId="Package\Populate DimSucursal\Destino de OLE DB.Connections[OleDbConnection]"
+                  refId="Package\populate DimTipoDocumento\Destino de OLE DB.Connections[OleDbConnection]"
                   connectionManagerID="Package.ConnectionManagers[target.DW_Ventas]"
                   connectionManagerRefId="Package.ConnectionManagers[target.DW_Ventas]"
                   description="La conexión de tiempo de ejecución OLE DB usada para obtener acceso a la base de datos."
@@ -362,126 +360,112 @@ where [refTable].[CodSucursalNK] = ?</property>
               </connections>
               <inputs>
                 <input
-                  refId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB]"
+                  refId="Package\populate DimTipoDocumento\Destino de OLE DB.Inputs[Entrada de destino de OLE DB]"
                   errorOrTruncationOperation="Insertar"
                   errorRowDisposition="FailComponent"
                   hasSideEffects="true"
                   name="Entrada de destino de OLE DB">
                   <inputColumns>
                     <inputColumn
-                      refId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].Columns[DESCRIPCION]"
+                      refId="Package\populate DimTipoDocumento\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].Columns[ACTIVO]"
+                      cachedDataType="bool"
+                      cachedName="ACTIVO"
+                      externalMetadataColumnId="Package\populate DimTipoDocumento\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Activo]"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[ACTIVO]" />
+                    <inputColumn
+                      refId="Package\populate DimTipoDocumento\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].Columns[DESCRIPCION]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="128"
+                      cachedName="DESCRIPCION"
+                      externalMetadataColumnId="Package\populate DimTipoDocumento\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Descripcion]"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[DESCRIPCION]" />
+                    <inputColumn
+                      refId="Package\populate DimTipoDocumento\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].Columns[TipoDocumentoKey]"
+                      cachedDataType="i4"
+                      cachedName="TipoDocumentoKey"
+                      externalMetadataColumnId="Package\populate DimTipoDocumento\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[TipoDocumentoKey]"
+                      lineageId="Package\populate DimTipoDocumento\Búsqueda.Outputs[Salida de entradas coincidentes de búsqueda].Columns[TipoDocumentoKey]" />
+                    <inputColumn
+                      refId="Package\populate DimTipoDocumento\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].Columns[SIGLA]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="SIGLA"
+                      externalMetadataColumnId="Package\populate DimTipoDocumento\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Sigla]"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[SIGLA]" />
+                    <inputColumn
+                      refId="Package\populate DimTipoDocumento\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].Columns[PAGO]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="16"
+                      cachedName="PAGO"
+                      externalMetadataColumnId="Package\populate DimTipoDocumento\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Pago]"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[PAGO]" />
+                    <inputColumn
+                      refId="Package\populate DimTipoDocumento\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].Columns[GLOSA]"
                       cachedCodepage="1252"
                       cachedDataType="str"
                       cachedLength="256"
-                      cachedName="DESCRIPCION"
-                      externalMetadataColumnId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Descripcion]"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[DESCRIPCION]" />
-                    <inputColumn
-                      refId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].Columns[DIRECCION]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="500"
-                      cachedName="DIRECCION"
-                      externalMetadataColumnId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Direccion]"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[DIRECCION]" />
-                    <inputColumn
-                      refId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].Columns[NIT]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="15"
-                      cachedName="NIT"
-                      externalMetadataColumnId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[NIT]"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[NIT]" />
-                    <inputColumn
-                      refId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].Columns[TELEFONO]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="20"
-                      cachedName="TELEFONO"
-                      externalMetadataColumnId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Telefono]"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[TELEFONO]" />
-                    <inputColumn
-                      refId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].Columns[EMAIL]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="40"
-                      cachedName="EMAIL"
-                      externalMetadataColumnId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Email]"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[EMAIL]" />
-                    <inputColumn
-                      refId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].Columns[ACTIVO]"
-                      cachedDataType="bool"
-                      cachedName="ACTIVO"
-                      externalMetadataColumnId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Activo]"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[ACTIVO]" />
-                    <inputColumn
-                      refId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].Columns[SucursalKey]"
-                      cachedDataType="i4"
-                      cachedName="SucursalKey"
-                      externalMetadataColumnId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[SucursalKey]"
-                      lineageId="Package\Populate DimSucursal\Búsqueda.Outputs[Salida de entradas coincidentes de búsqueda].Columns[SucursalKey]" />
+                      cachedName="GLOSA"
+                      externalMetadataColumnId="Package\populate DimTipoDocumento\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[GlosaTipoDoc]"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[GLOSA]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
                     <externalMetadataColumn
-                      refId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[SucursalKey]"
-                      dataType="i4"
-                      name="SucursalKey" />
+                      refId="Package\populate DimTipoDocumento\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Descripcion]"
+                      codePage="1252"
+                      dataType="str"
+                      length="128"
+                      name="Descripcion" />
                     <externalMetadataColumn
-                      refId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Descripcion]"
+                      refId="Package\populate DimTipoDocumento\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Activo]"
+                      dataType="bool"
+                      name="Activo" />
+                    <externalMetadataColumn
+                      refId="Package\populate DimTipoDocumento\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[TipoDocumentoKey]"
+                      dataType="i4"
+                      name="TipoDocumentoKey" />
+                    <externalMetadataColumn
+                      refId="Package\populate DimTipoDocumento\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Sigla]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="Sigla" />
+                    <externalMetadataColumn
+                      refId="Package\populate DimTipoDocumento\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Pago]"
+                      codePage="1252"
+                      dataType="str"
+                      length="16"
+                      name="Pago" />
+                    <externalMetadataColumn
+                      refId="Package\populate DimTipoDocumento\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[GlosaTipoDoc]"
                       codePage="1252"
                       dataType="str"
                       length="256"
-                      name="Descripcion" />
-                    <externalMetadataColumn
-                      refId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Direccion]"
-                      codePage="1252"
-                      dataType="str"
-                      length="500"
-                      name="Direccion" />
-                    <externalMetadataColumn
-                      refId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[NIT]"
-                      codePage="1252"
-                      dataType="str"
-                      length="15"
-                      name="NIT" />
-                    <externalMetadataColumn
-                      refId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Telefono]"
-                      codePage="1252"
-                      dataType="str"
-                      length="20"
-                      name="Telefono" />
-                    <externalMetadataColumn
-                      refId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Email]"
-                      codePage="1252"
-                      dataType="str"
-                      length="40"
-                      name="Email" />
-                    <externalMetadataColumn
-                      refId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB].ExternalColumns[Activo]"
-                      dataType="bool"
-                      name="Activo" />
+                      name="GlosaTipoDoc" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
               <outputs>
                 <output
-                  refId="Package\Populate DimSucursal\Destino de OLE DB.Outputs[Salida de error de destino de OLE DB]"
+                  refId="Package\populate DimTipoDocumento\Destino de OLE DB.Outputs[Salida de error de destino de OLE DB]"
                   exclusionGroup="1"
                   isErrorOut="true"
                   name="Salida de error de destino de OLE DB"
-                  synchronousInputId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB]">
+                  synchronousInputId="Package\populate DimTipoDocumento\Destino de OLE DB.Inputs[Entrada de destino de OLE DB]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Populate DimSucursal\Destino de OLE DB.Outputs[Salida de error de destino de OLE DB].Columns[ErrorCode]"
+                      refId="Package\populate DimTipoDocumento\Destino de OLE DB.Outputs[Salida de error de destino de OLE DB].Columns[ErrorCode]"
                       dataType="i4"
-                      lineageId="Package\Populate DimSucursal\Destino de OLE DB.Outputs[Salida de error de destino de OLE DB].Columns[ErrorCode]"
+                      lineageId="Package\populate DimTipoDocumento\Destino de OLE DB.Outputs[Salida de error de destino de OLE DB].Columns[ErrorCode]"
                       name="ErrorCode"
                       specialFlags="1" />
                     <outputColumn
-                      refId="Package\Populate DimSucursal\Destino de OLE DB.Outputs[Salida de error de destino de OLE DB].Columns[ErrorColumn]"
+                      refId="Package\populate DimTipoDocumento\Destino de OLE DB.Outputs[Salida de error de destino de OLE DB].Columns[ErrorColumn]"
                       dataType="i4"
-                      lineageId="Package\Populate DimSucursal\Destino de OLE DB.Outputs[Salida de error de destino de OLE DB].Columns[ErrorColumn]"
+                      lineageId="Package\populate DimTipoDocumento\Destino de OLE DB.Outputs[Salida de error de destino de OLE DB].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -490,11 +474,11 @@ where [refTable].[CodSucursalNK] = ?</property>
               </outputs>
             </component>
             <component
-              refId="Package\Populate DimSucursal\get Sucursal Row"
+              refId="Package\populate DimTipoDocumento\get tipoDocumento row"
               componentClassID="Microsoft.OLEDBSource"
               contactInfo="Origen de OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;7"
               description="Origen de OLE DB"
-              name="get Sucursal Row"
+              name="get tipoDocumento row"
               usesDispositions="true"
               version="7">
               <properties>
@@ -514,7 +498,7 @@ where [refTable].[CodSucursalNK] = ?</property>
                   dataType="System.String"
                   description="Comando SQL para ejecutar."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">EXEC [dbo].[GetSucursalChangesByRowVersion] @startRow=? , @endRow=?;</property>
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">EXEC [dbo].[GetTipoDocumentoByRowVersion] @startRow=? , @endRow=?;</property>
                 <property
                   dataType="System.String"
                   description="Variable que contiene el comando SQL para ejecutar."
@@ -535,11 +519,11 @@ where [refTable].[CodSucursalNK] = ?</property>
                 <property
                   dataType="System.String"
                   description="Asignaciones entre los parámetros del comando SQL y las variables."
-                  name="ParameterMapping">"@startRow:Input",{7304CE4B-C982-40F8-8B28-905AD54D7AB6};"@endRow:Input",{7D41BB68-C6CD-44CF-86E8-6FF3C51C2CE1};</property>
+                  name="ParameterMapping">"@startRow:Input",{D43AD09C-7ADE-4658-A28E-125864B7E0D6};"@endRow:Input",{592FBF29-4B9C-4D48-B164-E5584759CE4C};</property>
               </properties>
               <connections>
                 <connection
-                  refId="Package\Populate DimSucursal\get Sucursal Row.Connections[OleDbConnection]"
+                  refId="Package\populate DimTipoDocumento\get tipoDocumento row.Connections[OleDbConnection]"
                   connectionManagerID="Package.ConnectionManagers[source.Indsermaq]"
                   connectionManagerRefId="Package.ConnectionManagers[source.Indsermaq]"
                   description="La conexión de tiempo de ejecución OLE DB usada para obtener acceso a la base de datos."
@@ -547,191 +531,161 @@ where [refTable].[CodSucursalNK] = ?</property>
               </connections>
               <outputs>
                 <output
-                  refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB]"
+                  refId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB]"
                   name="Salida de origen de OLE DB">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[COD_SUCURSAL]"
-                      codePage="1252"
-                      dataType="str"
-                      errorOrTruncationOperation="Conversión"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].ExternalColumns[COD_SUCURSAL]"
-                      length="4"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[COD_SUCURSAL]"
-                      name="COD_SUCURSAL"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
-                      refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[DESCRIPCION]"
-                      codePage="1252"
-                      dataType="str"
-                      errorOrTruncationOperation="Conversión"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].ExternalColumns[DESCRIPCION]"
-                      length="256"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[DESCRIPCION]"
-                      name="DESCRIPCION"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
-                      refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[DIRECCION]"
-                      codePage="1252"
-                      dataType="str"
-                      errorOrTruncationOperation="Conversión"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].ExternalColumns[DIRECCION]"
-                      length="500"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[DIRECCION]"
-                      name="DIRECCION"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
-                      refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[NIT]"
-                      codePage="1252"
-                      dataType="str"
-                      errorOrTruncationOperation="Conversión"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].ExternalColumns[NIT]"
-                      length="15"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[NIT]"
-                      name="NIT"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
-                      refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[TELEFONO]"
-                      codePage="1252"
-                      dataType="str"
-                      errorOrTruncationOperation="Conversión"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].ExternalColumns[TELEFONO]"
-                      length="20"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[TELEFONO]"
-                      name="TELEFONO"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
-                      refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[EMAIL]"
-                      codePage="1252"
-                      dataType="str"
-                      errorOrTruncationOperation="Conversión"
-                      errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].ExternalColumns[EMAIL]"
-                      length="40"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[EMAIL]"
-                      name="EMAIL"
-                      truncationRowDisposition="FailComponent" />
-                    <outputColumn
-                      refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[ACTIVO]"
+                      refId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[ACTIVO]"
                       dataType="bool"
                       errorOrTruncationOperation="Conversión"
                       errorRowDisposition="FailComponent"
-                      externalMetadataColumnId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].ExternalColumns[ACTIVO]"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[ACTIVO]"
+                      externalMetadataColumnId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].ExternalColumns[ACTIVO]"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[ACTIVO]"
                       name="ACTIVO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[COD_TIPO_DOCUMENTO]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].ExternalColumns[COD_TIPO_DOCUMENTO]"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[COD_TIPO_DOCUMENTO]"
+                      name="COD_TIPO_DOCUMENTO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[SIGLA]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].ExternalColumns[SIGLA]"
+                      length="4"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[SIGLA]"
+                      name="SIGLA"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[DESCRIPCION]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].ExternalColumns[DESCRIPCION]"
+                      length="128"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[DESCRIPCION]"
+                      name="DESCRIPCION"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[PAGO]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].ExternalColumns[PAGO]"
+                      length="16"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[PAGO]"
+                      name="PAGO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[GLOSA]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].ExternalColumns[GLOSA]"
+                      length="256"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[GLOSA]"
+                      name="GLOSA"
                       truncationRowDisposition="FailComponent" />
                   </outputColumns>
                   <externalMetadataColumns
                     isUsed="True">
                     <externalMetadataColumn
-                      refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].ExternalColumns[COD_SUCURSAL]"
+                      refId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].ExternalColumns[ACTIVO]"
+                      dataType="bool"
+                      name="ACTIVO" />
+                    <externalMetadataColumn
+                      refId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].ExternalColumns[COD_TIPO_DOCUMENTO]"
+                      dataType="i4"
+                      name="COD_TIPO_DOCUMENTO" />
+                    <externalMetadataColumn
+                      refId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].ExternalColumns[SIGLA]"
                       codePage="1252"
                       dataType="str"
                       length="4"
-                      name="COD_SUCURSAL" />
+                      name="SIGLA" />
                     <externalMetadataColumn
-                      refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].ExternalColumns[DESCRIPCION]"
+                      refId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].ExternalColumns[DESCRIPCION]"
+                      codePage="1252"
+                      dataType="str"
+                      length="128"
+                      name="DESCRIPCION" />
+                    <externalMetadataColumn
+                      refId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].ExternalColumns[PAGO]"
+                      codePage="1252"
+                      dataType="str"
+                      length="16"
+                      name="PAGO" />
+                    <externalMetadataColumn
+                      refId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].ExternalColumns[GLOSA]"
                       codePage="1252"
                       dataType="str"
                       length="256"
-                      name="DESCRIPCION" />
-                    <externalMetadataColumn
-                      refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].ExternalColumns[DIRECCION]"
-                      codePage="1252"
-                      dataType="str"
-                      length="500"
-                      name="DIRECCION" />
-                    <externalMetadataColumn
-                      refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].ExternalColumns[NIT]"
-                      codePage="1252"
-                      dataType="str"
-                      length="15"
-                      name="NIT" />
-                    <externalMetadataColumn
-                      refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].ExternalColumns[TELEFONO]"
-                      codePage="1252"
-                      dataType="str"
-                      length="20"
-                      name="TELEFONO" />
-                    <externalMetadataColumn
-                      refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].ExternalColumns[EMAIL]"
-                      codePage="1252"
-                      dataType="str"
-                      length="40"
-                      name="EMAIL" />
-                    <externalMetadataColumn
-                      refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].ExternalColumns[ACTIVO]"
-                      dataType="bool"
-                      name="ACTIVO" />
+                      name="GLOSA" />
                   </externalMetadataColumns>
                 </output>
                 <output
-                  refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de error de origen de OLE DB]"
+                  refId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de error de origen de OLE DB]"
                   isErrorOut="true"
                   name="Salida de error de origen de OLE DB">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de error de origen de OLE DB].Columns[COD_SUCURSAL]"
+                      refId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de error de origen de OLE DB].Columns[COD_TIPO_DOCUMENTO]"
+                      dataType="i4"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de error de origen de OLE DB].Columns[COD_TIPO_DOCUMENTO]"
+                      name="COD_TIPO_DOCUMENTO" />
+                    <outputColumn
+                      refId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de error de origen de OLE DB].Columns[SIGLA]"
                       codePage="1252"
                       dataType="str"
                       length="4"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de error de origen de OLE DB].Columns[COD_SUCURSAL]"
-                      name="COD_SUCURSAL" />
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de error de origen de OLE DB].Columns[SIGLA]"
+                      name="SIGLA" />
                     <outputColumn
-                      refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de error de origen de OLE DB].Columns[DESCRIPCION]"
+                      refId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de error de origen de OLE DB].Columns[DESCRIPCION]"
+                      codePage="1252"
+                      dataType="str"
+                      length="128"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de error de origen de OLE DB].Columns[DESCRIPCION]"
+                      name="DESCRIPCION" />
+                    <outputColumn
+                      refId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de error de origen de OLE DB].Columns[PAGO]"
+                      codePage="1252"
+                      dataType="str"
+                      length="16"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de error de origen de OLE DB].Columns[PAGO]"
+                      name="PAGO" />
+                    <outputColumn
+                      refId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de error de origen de OLE DB].Columns[GLOSA]"
                       codePage="1252"
                       dataType="str"
                       length="256"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de error de origen de OLE DB].Columns[DESCRIPCION]"
-                      name="DESCRIPCION" />
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de error de origen de OLE DB].Columns[GLOSA]"
+                      name="GLOSA" />
                     <outputColumn
-                      refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de error de origen de OLE DB].Columns[DIRECCION]"
-                      codePage="1252"
-                      dataType="str"
-                      length="500"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de error de origen de OLE DB].Columns[DIRECCION]"
-                      name="DIRECCION" />
-                    <outputColumn
-                      refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de error de origen de OLE DB].Columns[NIT]"
-                      codePage="1252"
-                      dataType="str"
-                      length="15"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de error de origen de OLE DB].Columns[NIT]"
-                      name="NIT" />
-                    <outputColumn
-                      refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de error de origen de OLE DB].Columns[TELEFONO]"
-                      codePage="1252"
-                      dataType="str"
-                      length="20"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de error de origen de OLE DB].Columns[TELEFONO]"
-                      name="TELEFONO" />
-                    <outputColumn
-                      refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de error de origen de OLE DB].Columns[EMAIL]"
-                      codePage="1252"
-                      dataType="str"
-                      length="40"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de error de origen de OLE DB].Columns[EMAIL]"
-                      name="EMAIL" />
-                    <outputColumn
-                      refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de error de origen de OLE DB].Columns[ACTIVO]"
+                      refId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de error de origen de OLE DB].Columns[ACTIVO]"
                       dataType="bool"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de error de origen de OLE DB].Columns[ACTIVO]"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de error de origen de OLE DB].Columns[ACTIVO]"
                       name="ACTIVO" />
                     <outputColumn
-                      refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de error de origen de OLE DB].Columns[ErrorCode]"
+                      refId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de error de origen de OLE DB].Columns[ErrorCode]"
                       dataType="i4"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de error de origen de OLE DB].Columns[ErrorCode]"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de error de origen de OLE DB].Columns[ErrorCode]"
                       name="ErrorCode"
                       specialFlags="1" />
                     <outputColumn
-                      refId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de error de origen de OLE DB].Columns[ErrorColumn]"
+                      refId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de error de origen de OLE DB].Columns[ErrorColumn]"
                       dataType="i4"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de error de origen de OLE DB].Columns[ErrorColumn]"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de error de origen de OLE DB].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -740,11 +694,11 @@ where [refTable].[CodSucursalNK] = ?</property>
               </outputs>
             </component>
             <component
-              refId="Package\Populate DimSucursal\Load DimSucursal"
+              refId="Package\populate DimTipoDocumento\Load DimTipoDocumento"
               componentClassID="Microsoft.OLEDBDestination"
               contactInfo="Destino de OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;4"
               description="Destino de OLE DB"
-              name="Load DimSucursal"
+              name="Load DimTipoDocumento"
               usesDispositions="true"
               version="4">
               <properties>
@@ -755,7 +709,7 @@ where [refTable].[CodSucursalNK] = ?</property>
                 <property
                   dataType="System.String"
                   description="Especifica el nombre del objeto de base de datos usado para abrir un conjunto de filas."
-                  name="OpenRowset">[dw].[DimSucursal]</property>
+                  name="OpenRowset">[dw].[DimTipoDocumento]</property>
                 <property
                   dataType="System.String"
                   description="Especifica la variable que contiene el nombre del objeto de base de datos usado para abrir un conjunto de filas."
@@ -797,7 +751,7 @@ where [refTable].[CodSucursalNK] = ?</property>
               </properties>
               <connections>
                 <connection
-                  refId="Package\Populate DimSucursal\Load DimSucursal.Connections[OleDbConnection]"
+                  refId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Connections[OleDbConnection]"
                   connectionManagerID="Package.ConnectionManagers[target.DW_Ventas]"
                   connectionManagerRefId="Package.ConnectionManagers[target.DW_Ventas]"
                   description="La conexión de tiempo de ejecución OLE DB usada para obtener acceso a la base de datos."
@@ -805,134 +759,116 @@ where [refTable].[CodSucursalNK] = ?</property>
               </connections>
               <inputs>
                 <input
-                  refId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB]"
+                  refId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Inputs[Entrada de destino de OLE DB]"
                   errorOrTruncationOperation="Insertar"
                   errorRowDisposition="FailComponent"
                   hasSideEffects="true"
                   name="Entrada de destino de OLE DB">
                   <inputColumns>
                     <inputColumn
-                      refId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB].Columns[DESCRIPCION]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="256"
-                      cachedName="DESCRIPCION"
-                      externalMetadataColumnId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB].ExternalColumns[Descripcion]"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[DESCRIPCION]" />
-                    <inputColumn
-                      refId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB].Columns[DIRECCION]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="500"
-                      cachedName="DIRECCION"
-                      externalMetadataColumnId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB].ExternalColumns[Direccion]"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[DIRECCION]" />
-                    <inputColumn
-                      refId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB].Columns[NIT]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="15"
-                      cachedName="NIT"
-                      externalMetadataColumnId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB].ExternalColumns[NIT]"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[NIT]" />
-                    <inputColumn
-                      refId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB].Columns[TELEFONO]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="20"
-                      cachedName="TELEFONO"
-                      externalMetadataColumnId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB].ExternalColumns[Telefono]"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[TELEFONO]" />
-                    <inputColumn
-                      refId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB].Columns[EMAIL]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="40"
-                      cachedName="EMAIL"
-                      externalMetadataColumnId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB].ExternalColumns[Email]"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[EMAIL]" />
-                    <inputColumn
-                      refId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB].Columns[ACTIVO]"
+                      refId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Inputs[Entrada de destino de OLE DB].Columns[ACTIVO]"
                       cachedDataType="bool"
                       cachedName="ACTIVO"
-                      externalMetadataColumnId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB].ExternalColumns[Activo]"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[ACTIVO]" />
+                      externalMetadataColumnId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Inputs[Entrada de destino de OLE DB].ExternalColumns[Activo]"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[ACTIVO]" />
                     <inputColumn
-                      refId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB].Columns[COD_SUCURSAL]"
+                      refId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Inputs[Entrada de destino de OLE DB].Columns[DESCRIPCION]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="128"
+                      cachedName="DESCRIPCION"
+                      externalMetadataColumnId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Inputs[Entrada de destino de OLE DB].ExternalColumns[Descripcion]"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[DESCRIPCION]" />
+                    <inputColumn
+                      refId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Inputs[Entrada de destino de OLE DB].Columns[COD_TIPO_DOCUMENTO]"
+                      cachedDataType="i4"
+                      cachedName="COD_TIPO_DOCUMENTO"
+                      externalMetadataColumnId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Inputs[Entrada de destino de OLE DB].ExternalColumns[CodTipoDocumentoNK]"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[COD_TIPO_DOCUMENTO]" />
+                    <inputColumn
+                      refId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Inputs[Entrada de destino de OLE DB].Columns[SIGLA]"
                       cachedCodepage="1252"
                       cachedDataType="str"
                       cachedLength="4"
-                      cachedName="COD_SUCURSAL"
-                      externalMetadataColumnId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB].ExternalColumns[CodSucursalNK]"
-                      lineageId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB].Columns[COD_SUCURSAL]" />
+                      cachedName="SIGLA"
+                      externalMetadataColumnId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Inputs[Entrada de destino de OLE DB].ExternalColumns[Sigla]"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[SIGLA]" />
+                    <inputColumn
+                      refId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Inputs[Entrada de destino de OLE DB].Columns[PAGO]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="16"
+                      cachedName="PAGO"
+                      externalMetadataColumnId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Inputs[Entrada de destino de OLE DB].ExternalColumns[Pago]"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[PAGO]" />
+                    <inputColumn
+                      refId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Inputs[Entrada de destino de OLE DB].Columns[GLOSA]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="256"
+                      cachedName="GLOSA"
+                      externalMetadataColumnId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Inputs[Entrada de destino de OLE DB].ExternalColumns[GlosaTipoDoc]"
+                      lineageId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB].Columns[GLOSA]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
                     <externalMetadataColumn
-                      refId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB].ExternalColumns[SucursalKey]"
-                      dataType="i4"
-                      name="SucursalKey" />
+                      refId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Inputs[Entrada de destino de OLE DB].ExternalColumns[Descripcion]"
+                      codePage="1252"
+                      dataType="str"
+                      length="128"
+                      name="Descripcion" />
                     <externalMetadataColumn
-                      refId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB].ExternalColumns[CodSucursalNK]"
+                      refId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Inputs[Entrada de destino de OLE DB].ExternalColumns[Activo]"
+                      dataType="bool"
+                      name="Activo" />
+                    <externalMetadataColumn
+                      refId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Inputs[Entrada de destino de OLE DB].ExternalColumns[TipoDocumentoKey]"
+                      dataType="i4"
+                      name="TipoDocumentoKey" />
+                    <externalMetadataColumn
+                      refId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Inputs[Entrada de destino de OLE DB].ExternalColumns[CodTipoDocumentoNK]"
+                      dataType="i4"
+                      name="CodTipoDocumentoNK" />
+                    <externalMetadataColumn
+                      refId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Inputs[Entrada de destino de OLE DB].ExternalColumns[Sigla]"
                       codePage="1252"
                       dataType="str"
                       length="4"
-                      name="CodSucursalNK" />
+                      name="Sigla" />
                     <externalMetadataColumn
-                      refId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB].ExternalColumns[Descripcion]"
+                      refId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Inputs[Entrada de destino de OLE DB].ExternalColumns[Pago]"
+                      codePage="1252"
+                      dataType="str"
+                      length="16"
+                      name="Pago" />
+                    <externalMetadataColumn
+                      refId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Inputs[Entrada de destino de OLE DB].ExternalColumns[GlosaTipoDoc]"
                       codePage="1252"
                       dataType="str"
                       length="256"
-                      name="Descripcion" />
-                    <externalMetadataColumn
-                      refId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB].ExternalColumns[Direccion]"
-                      codePage="1252"
-                      dataType="str"
-                      length="500"
-                      name="Direccion" />
-                    <externalMetadataColumn
-                      refId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB].ExternalColumns[NIT]"
-                      codePage="1252"
-                      dataType="str"
-                      length="15"
-                      name="NIT" />
-                    <externalMetadataColumn
-                      refId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB].ExternalColumns[Telefono]"
-                      codePage="1252"
-                      dataType="str"
-                      length="20"
-                      name="Telefono" />
-                    <externalMetadataColumn
-                      refId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB].ExternalColumns[Email]"
-                      codePage="1252"
-                      dataType="str"
-                      length="40"
-                      name="Email" />
-                    <externalMetadataColumn
-                      refId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB].ExternalColumns[Activo]"
-                      dataType="bool"
-                      name="Activo" />
+                      name="GlosaTipoDoc" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
               <outputs>
                 <output
-                  refId="Package\Populate DimSucursal\Load DimSucursal.Outputs[Salida de error de destino de OLE DB]"
+                  refId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Outputs[Salida de error de destino de OLE DB]"
                   exclusionGroup="1"
                   isErrorOut="true"
                   name="Salida de error de destino de OLE DB"
-                  synchronousInputId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB]">
+                  synchronousInputId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Inputs[Entrada de destino de OLE DB]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\Populate DimSucursal\Load DimSucursal.Outputs[Salida de error de destino de OLE DB].Columns[ErrorCode]"
+                      refId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Outputs[Salida de error de destino de OLE DB].Columns[ErrorCode]"
                       dataType="i4"
-                      lineageId="Package\Populate DimSucursal\Load DimSucursal.Outputs[Salida de error de destino de OLE DB].Columns[ErrorCode]"
+                      lineageId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Outputs[Salida de error de destino de OLE DB].Columns[ErrorCode]"
                       name="ErrorCode"
                       specialFlags="1" />
                     <outputColumn
-                      refId="Package\Populate DimSucursal\Load DimSucursal.Outputs[Salida de error de destino de OLE DB].Columns[ErrorColumn]"
+                      refId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Outputs[Salida de error de destino de OLE DB].Columns[ErrorColumn]"
                       dataType="i4"
-                      lineageId="Package\Populate DimSucursal\Load DimSucursal.Outputs[Salida de error de destino de OLE DB].Columns[ErrorColumn]"
+                      lineageId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Outputs[Salida de error de destino de OLE DB].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -943,20 +879,20 @@ where [refTable].[CodSucursalNK] = ?</property>
           </components>
           <paths>
             <path
-              refId="Package\Populate DimSucursal.Paths[Salida de entradas coincidentes de búsqueda]"
-              endId="Package\Populate DimSucursal\Destino de OLE DB.Inputs[Entrada de destino de OLE DB]"
+              refId="Package\populate DimTipoDocumento.Paths[Salida de entradas coincidentes de búsqueda]"
+              endId="Package\populate DimTipoDocumento\Destino de OLE DB.Inputs[Entrada de destino de OLE DB]"
               name="Salida de entradas coincidentes de búsqueda"
-              startId="Package\Populate DimSucursal\Búsqueda.Outputs[Salida de entradas coincidentes de búsqueda]" />
+              startId="Package\populate DimTipoDocumento\Búsqueda.Outputs[Salida de entradas coincidentes de búsqueda]" />
             <path
-              refId="Package\Populate DimSucursal.Paths[Salida de entradas no coincidentes de búsqueda]"
-              endId="Package\Populate DimSucursal\Load DimSucursal.Inputs[Entrada de destino de OLE DB]"
+              refId="Package\populate DimTipoDocumento.Paths[Salida de entradas no coincidentes de búsqueda]"
+              endId="Package\populate DimTipoDocumento\Load DimTipoDocumento.Inputs[Entrada de destino de OLE DB]"
               name="Salida de entradas no coincidentes de búsqueda"
-              startId="Package\Populate DimSucursal\Búsqueda.Outputs[Salida de entradas no coincidentes de búsqueda]" />
+              startId="Package\populate DimTipoDocumento\Búsqueda.Outputs[Salida de entradas no coincidentes de búsqueda]" />
             <path
-              refId="Package\Populate DimSucursal.Paths[Salida de origen de OLE DB]"
-              endId="Package\Populate DimSucursal\Búsqueda.Inputs[Entrada de búsqueda]"
+              refId="Package\populate DimTipoDocumento.Paths[Salida de origen de OLE DB]"
+              endId="Package\populate DimTipoDocumento\Búsqueda.Inputs[Entrada de búsqueda]"
               name="Salida de origen de OLE DB"
-              startId="Package\Populate DimSucursal\get Sucursal Row.Outputs[Salida de origen de OLE DB]" />
+              startId="Package\populate DimTipoDocumento\get tipoDocumento row.Outputs[Salida de origen de OLE DB]" />
           </paths>
         </pipeline>
       </DTS:ObjectData>
@@ -965,7 +901,7 @@ where [refTable].[CodSucursalNK] = ?</property>
       DTS:refId="Package\Sync values"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Tarea Ejecutar SQL"
-      DTS:DTSID="{B8B31F0A-72EE-4187-876E-E261210B7266}"
+      DTS:DTSID="{4af83cda-13ad-4791-b13b-1470985fa3f0}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Sync values"
@@ -974,25 +910,25 @@ where [refTable].[CodSucursalNK] = ?</property>
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{0610F4AA-AE8D-4DAD-B34B-3ADDA2193E6B}"
-          SQLTask:SqlStatementSource="EXECUTE [dbo].[DW_MergeSucursal];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:Connection="{3003DE33-7239-45C0-90FC-981A86391882}"
+          SQLTask:SqlStatementSource="EXECUTE [dbo].[DW_MergeTipoDocumento];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
-      DTS:refId="Package\Update Config"
+      DTS:refId="Package\Update config"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Tarea Ejecutar SQL"
-      DTS:DTSID="{9931E37D-07F3-4717-87DB-103DEA722282}"
+      DTS:DTSID="{fed84a30-2d40-45cf-847d-8e0e7961d87e}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
-      DTS:ObjectName="Update Config"
+      DTS:ObjectName="Update config"
       DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
       DTS:ThreadHint="0">
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{0610F4AA-AE8D-4DAD-B34B-3ADDA2193E6B}"
-          SQLTask:SqlStatementSource="EXECUTE [dbo].[UpdateLastPackageRowVersion] @tableName = 'Sucursal' ,@lastRowVersion = ?;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          SQLTask:Connection="{3003DE33-7239-45C0-90FC-981A86391882}"
+          SQLTask:SqlStatementSource="EXECUTE [dbo].[UpdateLastPackageRowVersion] @tableName = 'TipoDocumento' ,@lastRowVersion = ?;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ParameterBinding
             SQLTask:ParameterName="0"
             SQLTask:DtsVariableName="User::DBTS"
@@ -1007,7 +943,7 @@ where [refTable].[CodSucursalNK] = ?</property>
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Restricción]"
       DTS:CreationName=""
-      DTS:DTSID="{886AD0A5-A8B0-44D0-95CC-87880B7786A1}"
+      DTS:DTSID="{b85736fb-0afa-4ada-a6a7-34bbe6e93b1b}"
       DTS:From="Package\get database row version"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Restricción"
@@ -1015,7 +951,7 @@ where [refTable].[CodSucursalNK] = ?</property>
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Restricción 1]"
       DTS:CreationName=""
-      DTS:DTSID="{3B05D91E-B9BA-42D3-8149-0E08CBCEE2E7}"
+      DTS:DTSID="{f9654b80-3278-4c09-b385-2d0045c42eef}"
       DTS:From="Package\get store row version"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Restricción 1"
@@ -1023,27 +959,27 @@ where [refTable].[CodSucursalNK] = ?</property>
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Restricción 2]"
       DTS:CreationName=""
-      DTS:DTSID="{A8551C00-5951-4A98-9319-850EE125E027}"
+      DTS:DTSID="{456f0ccd-36a5-4426-91c3-618581dc46eb}"
       DTS:From="Package\clean staging area"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Restricción 2"
-      DTS:To="Package\Populate DimSucursal" />
+      DTS:To="Package\populate DimTipoDocumento" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Restricción 3]"
       DTS:CreationName=""
-      DTS:DTSID="{73E915FE-8A53-468E-8597-A596329CA718}"
-      DTS:From="Package\Populate DimSucursal"
+      DTS:DTSID="{e182ae79-92bb-443e-b6e1-e18cc92ce76c}"
+      DTS:From="Package\populate DimTipoDocumento"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Restricción 3"
       DTS:To="Package\Sync values" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Restricción 4]"
       DTS:CreationName=""
-      DTS:DTSID="{6F4E852A-1CD9-4F11-85E4-775A7D6A5374}"
+      DTS:DTSID="{e06c80a6-18f0-4387-81c2-0405f87dc48a}"
       DTS:From="Package\Sync values"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Restricción 4"
-      DTS:To="Package\Update Config" />
+      DTS:To="Package\Update config" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--Esta sección CDATA contiene la información de diseño del paquete. Esta sección incluye información como, por ejemplo, las coordenadas (x,y), el ancho y el alto.-->
@@ -1058,43 +994,43 @@ where [refTable].[CodSucursalNK] = ?</property>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="169,42"
-          Id="Package\clean staging area"
-          TopLeft="275,267" />
-        <NodeLayout
           Size="202,42"
           Id="Package\get database row version"
-          TopLeft="256,100" />
+          TopLeft="499,58" />
         <NodeLayout
           Size="181,42"
           Id="Package\get store row version"
-          TopLeft="267,181" />
+          TopLeft="515,133" />
         <NodeLayout
-          Size="188,42"
-          Id="Package\Populate DimSucursal"
-          TopLeft="274,348" />
+          Size="169,42"
+          Id="Package\clean staging area"
+          TopLeft="517,218" />
+        <NodeLayout
+          Size="222,42"
+          Id="Package\populate DimTipoDocumento"
+          TopLeft="515,308" />
         <NodeLayout
           Size="138,42"
           Id="Package\Sync values"
-          TopLeft="292,421" />
+          TopLeft="545,407" />
         <NodeLayout
-          Size="149,42"
-          Id="Package\Update Config"
-          TopLeft="280,504" />
+          Size="147,42"
+          Id="Package\Update config"
+          TopLeft="538,508" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción]"
-          TopLeft="357.25,142">
+          TopLeft="602.75,100">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,39"
+              EndConnector="0,33"
               Start="0,0"
-              End="0,31.5">
+              End="0,25.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,31.5" />
+                    End="0,25.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -1105,131 +1041,7 @@ where [refTable].[CodSucursalNK] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción 1]"
-          TopLeft="358.5,223">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,44"
-              Start="0,0"
-              End="0,36.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,36.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Restricción 2]"
-          TopLeft="359.5,309">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="8.5,39"
-              Start="0,0"
-              End="8.5,31.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,15.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,15.5"
-                    Point2="0,19.5"
-                    Point3="4,19.5" />
-                  <mssgle:LineSegment
-                    End="4.5,19.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="4.5,19.5"
-                    Point2="8.5,19.5"
-                    Point3="8.5,23.5" />
-                  <mssgle:LineSegment
-                    End="8.5,31.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Restricción 3]"
-          TopLeft="364.5,390">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,31"
-              Start="0,0"
-              End="0,23.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,23.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Restricción 4]"
-          TopLeft="357.75,463">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,41"
-              Start="0,0"
-              End="0,33.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,33.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </Package>
-  <TaskHost
-    design-time-name="Package\Populate DimSucursal">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
-        <NodeLayout
-          Size="175,42"
-          Id="Package\Populate DimSucursal\Destino de OLE DB"
-          TopLeft="182,281" />
-        <NodeLayout
-          Size="165,42"
-          Id="Package\Populate DimSucursal\get Sucursal Row"
-          TopLeft="417,83" />
-        <NodeLayout
-          Size="169,42"
-          Id="Package\Populate DimSucursal\Load DimSucursal"
-          TopLeft="715,285" />
-        <NodeLayout
-          Size="129,42"
-          Id="Package\Populate DimSucursal\Búsqueda"
-          TopLeft="436,168" />
-        <EdgeLayout
-          Id="Package\Populate DimSucursal.Paths[Salida de origen de OLE DB]"
-          TopLeft="500,125">
+          TopLeft="603.5,175">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -1250,74 +1062,210 @@ where [refTable].[CodSucursalNK] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Populate DimSucursal.Paths[Salida de entradas no coincidentes de búsqueda]"
-          TopLeft="520.666666666667,210">
+          Id="Package.PrecedenceConstraints[Restricción 2]"
+          TopLeft="601.5,260">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="278.833333333333,75"
+              EndConnector="24.5,48"
               Start="0,0"
-              End="278.833333333333,67.5">
+              End="24.5,40.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,26.5513016845329" />
+                    End="0,20" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,26.5513016845329"
-                    Point2="0,30.5513016845329"
-                    Point3="4,30.5513016845329" />
+                    Point1="0,20"
+                    Point2="0,24"
+                    Point3="4,24" />
                   <mssgle:LineSegment
-                    End="274.833333333333,30.5513016845329" />
+                    End="20.5,24" />
                   <mssgle:CubicBezierSegment
-                    Point1="274.833333333333,30.5513016845329"
-                    Point2="278.833333333333,30.5513016845329"
-                    Point3="278.833333333333,34.5513016845329" />
+                    Point1="20.5,24"
+                    Point2="24.5,24"
+                    Point3="24.5,28" />
                   <mssgle:LineSegment
-                    End="278.833333333333,67.5" />
+                    End="24.5,40.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Restricción 3]"
+          TopLeft="626,350">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-12,57"
+              Start="0,0"
+              End="-12,49.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24.5"
+                    Point2="0,28.5"
+                    Point3="-4,28.5" />
+                  <mssgle:LineSegment
+                    End="-8,28.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-8,28.5"
+                    Point2="-12,28.5"
+                    Point3="-12,32.5" />
+                  <mssgle:LineSegment
+                    End="-12,49.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Restricción 4]"
+          TopLeft="612.75,449">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59"
+              Start="0,0"
+              End="0,51.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,51.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\populate DimTipoDocumento">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="204,42"
+          Id="Package\populate DimTipoDocumento\Load DimTipoDocumento"
+          TopLeft="619,292" />
+        <NodeLayout
+          Size="175,42"
+          Id="Package\populate DimTipoDocumento\Destino de OLE DB"
+          TopLeft="118,280" />
+        <NodeLayout
+          Size="192,42"
+          Id="Package\populate DimTipoDocumento\get tipoDocumento row"
+          TopLeft="350,74" />
+        <NodeLayout
+          Size="129,42"
+          Id="Package\populate DimTipoDocumento\Búsqueda"
+          TopLeft="377,167" />
+        <EdgeLayout
+          Id="Package\populate DimTipoDocumento.Paths[Salida de origen de OLE DB]"
+          TopLeft="443.75,116">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,51"
+              Start="0,0"
+              End="0,43.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\populate DimTipoDocumento.Paths[Salida de entradas no coincidentes de búsqueda]"
+          TopLeft="461.666666666667,209">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="259.333333333333,83"
+              Start="0,0"
+              End="259.333333333333,75.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.8101071975498" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29.8101071975498"
+                    Point2="0,33.8101071975498"
+                    Point3="4,33.8101071975498" />
+                  <mssgle:LineSegment
+                    End="255.333333333333,33.8101071975498" />
+                  <mssgle:CubicBezierSegment
+                    Point1="255.333333333333,33.8101071975498"
+                    Point2="259.333333333333,33.8101071975498"
+                    Point3="259.333333333333,37.8101071975498" />
+                  <mssgle:LineSegment
+                    End="259.333333333333,75.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="32.5276432291667,35.5513016845329,213.778046875,12.1953125"
+              BoundingBox="22.7776432291667,38.8101071975498,213.778046875,12.1953125"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Populate DimSucursal.Paths[Salida de entradas coincidentes de búsqueda]"
-          TopLeft="480.333333333333,210">
+          Id="Package\populate DimTipoDocumento.Paths[Salida de entradas coincidentes de búsqueda]"
+          TopLeft="441.5,209">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-210.833333333333,71"
+              EndConnector="-236,71"
               Start="0,0"
-              End="-210.833333333333,63.5">
+              End="-236,63.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,24.9218989280245" />
+                    End="0,31.5" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,24.9218989280245"
-                    Point2="0,28.9218989280245"
-                    Point3="-4,28.9218989280245" />
+                    Point1="0,31.5"
+                    Point2="0,35.5"
+                    Point3="-4,35.5" />
                   <mssgle:LineSegment
-                    End="-206.833333333333,28.9218989280245" />
+                    End="-232,35.5" />
                   <mssgle:CubicBezierSegment
-                    Point1="-206.833333333333,28.9218989280245"
-                    Point2="-210.833333333333,28.9218989280245"
-                    Point3="-210.833333333333,32.9218989280245" />
+                    Point1="-232,35.5"
+                    Point2="-236,35.5"
+                    Point3="-236,39.5" />
                   <mssgle:LineSegment
-                    End="-210.833333333333,63.5" />
+                    End="-236,63.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-205.235690104167,33.9218989280245,199.638046875,12.1953125"
+              BoundingBox="-217.8190234375,40.5,199.638046875,12.1953125"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -1325,7 +1273,7 @@ where [refTable].[CodSucursalNK] = ?</property>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Populate DimSucursal\Destino de OLE DB">
+    design-time-name="Package\populate DimTipoDocumento\Load DimTipoDocumento">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -1338,15 +1286,7 @@ where [refTable].[CodSucursalNK] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Populate DimSucursal\get Sucursal Row">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Populate DimSucursal\Load DimSucursal">
+    design-time-name="Package\populate DimTipoDocumento\Destino de OLE DB">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -1359,22 +1299,30 @@ where [refTable].[CodSucursalNK] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Populate DimSucursal\Búsqueda">
+    design-time-name="Package\populate DimTipoDocumento\get tipoDocumento row">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\populate DimTipoDocumento\Búsqueda">
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
         <Value
-          type="q3:string">[dw].[DimSucursal]</Value>
+          type="q3:string">[dw].[DimTipoDocumento]</Value>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
+          type="q4:int">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
