@@ -1,0 +1,3051 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/23/2026 3:19:38 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="W11"
+  DTS:CreatorName="W11\pande"
+  DTS:DTSID="{C69CF7C4-5793-46E7-A221-B47B404D1A5C}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1016.0"
+  DTS:LocaleID="3082"
+  DTS:ObjectName="factVentas"
+  DTS:PackageType="5"
+  DTS:VersionBuild="35"
+  DTS:VersionGUID="{E91FE080-722C-41B7-BC55-D4948860B670}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[source.Indsermaq]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{A3E43FC5-7CC9-4E42-A6B8-3E35CB047960}"
+      DTS:ObjectName="source.Indsermaq">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=w11;Initial Catalog=Indsermaq;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package-{A3E43FC5-7CC9-4E42-A6B8-3E35CB047960}w11.Indsermaq;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[target.DW_Ventas]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{01ED3FD9-2025-4F6E-A7D8-A4F7C4C48FC7}"
+      DTS:ObjectName="target.DW_Ventas">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=w11;Initial Catalog=DW_Ventas;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package-{01ED3FD9-2025-4F6E-A7D8-A4F7C4C48FC7}w11.DW_Ventas;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1F7F0854-8793-4BC4-8C3F-3093C95EECB1}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="DBTS">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{784F527D-5C49-4FB2-9D1D-79D5681AC9F3}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="LastRowVersion">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\clean staging area"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Tarea Ejecutar SQL"
+      DTS:DTSID="{16408313-9246-45B5-AFC2-5CD426E48291}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="clean staging area"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{01ED3FD9-2025-4F6E-A7D8-A4F7C4C48FC7}"
+          SQLTask:SqlStatementSource="TRUNCATE Table staging.factventas" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\get database row version"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Tarea Ejecutar SQL"
+      DTS:DTSID="{23311B26-7D6A-4B60-872B-EAAAB4DC2CA8}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="get database row version"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A3E43FC5-7CC9-4E42-A6B8-3E35CB047960}"
+          SQLTask:SqlStatementSource="EXEC [dbo].[GetDatabaseRowVersion]"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="DBTS"
+            SQLTask:DtsVariableName="User::DBTS" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\get store row version"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Tarea Ejecutar SQL"
+      DTS:DTSID="{15075AA6-F3AA-4F58-B627-06D984B89648}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="get store row version"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{01ED3FD9-2025-4F6E-A7D8-A4F7C4C48FC7}"
+          SQLTask:SqlStatementSource="EXEC [dbo].[GetLastPackageRowVersion] @tableName = 'factventa'"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="LastRowVersion"
+            SQLTask:DtsVariableName="User::LastRowVersion" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load FactVentas"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Tarea Flujo de datos"
+      DTS:DTSID="{18A13C9E-7C3F-41DD-90FE-299486A46BE8}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load FactVentas"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load FactVentas\get factVentas"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="Origen de OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;7"
+              description="Origen de OLE DB"
+              name="get factVentas"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Número de segundos antes de que se agote el tiempo de espera de un comando. Un valor de 0 indica un tiempo de espera infinito."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica el nombre del objeto de base de datos usado para abrir un conjunto de filas."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Especifica la variable que contiene el nombre del objeto de base de datos usado para abrir un conjunto de filas."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="Comando SQL para ejecutar."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">EXEC [dbo].[GetFactVentaChangesByRowVersion] @startRow=? , @endRow=?;</property>
+                <property
+                  dataType="System.String"
+                  description="Variable que contiene el comando SQL para ejecutar."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica la página de códigos de columna para utilizar cuando la información de página de códigos no está disponible en el origen de datos."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Fuerza el uso del valor de la propiedad DefaultCodePage al describir datos de caracteres."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el modo utilizado para obtener acceso a la base de datos."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="Asignaciones entre los parámetros del comando SQL y las variables."
+                  name="ParameterMapping">"@startRow:Input",{784F527D-5C49-4FB2-9D1D-79D5681AC9F3};"@endRow:Input",{1F7F0854-8793-4BC4-8C3F-3093C95EECB1};</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load FactVentas\get factVentas.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[source.Indsermaq]"
+                  connectionManagerRefId="Package.ConnectionManagers[source.Indsermaq]"
+                  description="La conexión de tiempo de ejecución OLE DB usada para obtener acceso a la base de datos."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB]"
+                  name="Salida de origen de OLE DB">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[COD_VENTA]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[COD_VENTA]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[COD_VENTA]"
+                      name="COD_VENTA"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[FactId]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[FactId]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[FactId]"
+                      name="FactId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[TiempoKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[TiempoKey]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[TiempoKey]"
+                      name="TiempoKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[SucursalKey]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[SucursalKey]"
+                      length="4"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[SucursalKey]"
+                      name="SucursalKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[TipoPagoKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[TipoPagoKey]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[TipoPagoKey]"
+                      name="TipoPagoKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[TipoDocumentoKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[TipoDocumentoKey]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[TipoDocumentoKey]"
+                      name="TipoDocumentoKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[VendedorKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[VendedorKey]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[VendedorKey]"
+                      name="VendedorKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[ClienteKey]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[ClienteKey]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[ClienteKey]"
+                      name="ClienteKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[NRO_VENTA]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[NRO_VENTA]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[NRO_VENTA]"
+                      name="NRO_VENTA"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[GLOSA]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[GLOSA]"
+                      length="512"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[GLOSA]"
+                      name="GLOSA"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[CLIENTE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[CLIENTE]"
+                      length="256"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[CLIENTE]"
+                      name="CLIENTE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[FECHA_VENTA]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[FECHA_VENTA]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[FECHA_VENTA]"
+                      name="FECHA_VENTA"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[nroFactura]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[nroFactura]"
+                      length="128"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[nroFactura]"
+                      name="nroFactura"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[nombreFactura]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[nombreFactura]"
+                      length="256"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[nombreFactura]"
+                      name="nombreFactura"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[glosaFactura]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[glosaFactura]"
+                      length="512"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[glosaFactura]"
+                      name="glosaFactura"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[MontoTotalFactura]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[MontoTotalFactura]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[MontoTotalFactura]"
+                      name="MontoTotalFactura"
+                      precision="18"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[MONTO_TOTAL]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[MONTO_TOTAL]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[MONTO_TOTAL]"
+                      name="MONTO_TOTAL"
+                      precision="10"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[TIPO_CAMBIO]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[TIPO_CAMBIO]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[TIPO_CAMBIO]"
+                      name="TIPO_CAMBIO"
+                      precision="10"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[PCT_DESCUENTO]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[PCT_DESCUENTO]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[PCT_DESCUENTO]"
+                      name="PCT_DESCUENTO"
+                      precision="10"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[PAGO_BS]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[PAGO_BS]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[PAGO_BS]"
+                      name="PAGO_BS"
+                      precision="10"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[TOTAL_PAGAR_BS]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[TOTAL_PAGAR_BS]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[TOTAL_PAGAR_BS]"
+                      name="TOTAL_PAGAR_BS"
+                      precision="10"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[COD_VENTA]"
+                      dataType="i8"
+                      name="COD_VENTA" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[FactId]"
+                      dataType="i8"
+                      name="FactId" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[TiempoKey]"
+                      dataType="i4"
+                      name="TiempoKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[SucursalKey]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="SucursalKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[TipoPagoKey]"
+                      dataType="i4"
+                      name="TipoPagoKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[TipoDocumentoKey]"
+                      dataType="i4"
+                      name="TipoDocumentoKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[VendedorKey]"
+                      dataType="i4"
+                      name="VendedorKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[ClienteKey]"
+                      dataType="i8"
+                      name="ClienteKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[NRO_VENTA]"
+                      dataType="i4"
+                      name="NRO_VENTA" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[GLOSA]"
+                      codePage="1252"
+                      dataType="str"
+                      length="512"
+                      name="GLOSA" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[CLIENTE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="256"
+                      name="CLIENTE" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[FECHA_VENTA]"
+                      dataType="dbDate"
+                      name="FECHA_VENTA" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[nroFactura]"
+                      codePage="1252"
+                      dataType="str"
+                      length="128"
+                      name="nroFactura" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[nombreFactura]"
+                      codePage="1252"
+                      dataType="str"
+                      length="256"
+                      name="nombreFactura" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[glosaFactura]"
+                      codePage="1252"
+                      dataType="str"
+                      length="512"
+                      name="glosaFactura" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[MontoTotalFactura]"
+                      dataType="numeric"
+                      name="MontoTotalFactura"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[MONTO_TOTAL]"
+                      dataType="numeric"
+                      name="MONTO_TOTAL"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[TIPO_CAMBIO]"
+                      dataType="numeric"
+                      name="TIPO_CAMBIO"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[PCT_DESCUENTO]"
+                      dataType="numeric"
+                      name="PCT_DESCUENTO"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[PAGO_BS]"
+                      dataType="numeric"
+                      name="PAGO_BS"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].ExternalColumns[TOTAL_PAGAR_BS]"
+                      dataType="numeric"
+                      name="TOTAL_PAGAR_BS"
+                      precision="10"
+                      scale="2" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB]"
+                  isErrorOut="true"
+                  name="Salida de error de origen de OLE DB">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[COD_VENTA]"
+                      dataType="i8"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[COD_VENTA]"
+                      name="COD_VENTA" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[FactId]"
+                      dataType="i8"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[FactId]"
+                      name="FactId" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[TiempoKey]"
+                      dataType="i4"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[TiempoKey]"
+                      name="TiempoKey" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[SucursalKey]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[SucursalKey]"
+                      name="SucursalKey" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[TipoPagoKey]"
+                      dataType="i4"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[TipoPagoKey]"
+                      name="TipoPagoKey" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[TipoDocumentoKey]"
+                      dataType="i4"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[TipoDocumentoKey]"
+                      name="TipoDocumentoKey" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[VendedorKey]"
+                      dataType="i4"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[VendedorKey]"
+                      name="VendedorKey" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[ClienteKey]"
+                      dataType="i8"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[ClienteKey]"
+                      name="ClienteKey" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[NRO_VENTA]"
+                      dataType="i4"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[NRO_VENTA]"
+                      name="NRO_VENTA" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[GLOSA]"
+                      codePage="1252"
+                      dataType="str"
+                      length="512"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[GLOSA]"
+                      name="GLOSA" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[CLIENTE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="256"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[CLIENTE]"
+                      name="CLIENTE" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[FECHA_VENTA]"
+                      dataType="dbDate"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[FECHA_VENTA]"
+                      name="FECHA_VENTA" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[nroFactura]"
+                      codePage="1252"
+                      dataType="str"
+                      length="128"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[nroFactura]"
+                      name="nroFactura" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[nombreFactura]"
+                      codePage="1252"
+                      dataType="str"
+                      length="256"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[nombreFactura]"
+                      name="nombreFactura" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[glosaFactura]"
+                      codePage="1252"
+                      dataType="str"
+                      length="512"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[glosaFactura]"
+                      name="glosaFactura" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[MontoTotalFactura]"
+                      dataType="numeric"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[MontoTotalFactura]"
+                      name="MontoTotalFactura"
+                      precision="18"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[MONTO_TOTAL]"
+                      dataType="numeric"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[MONTO_TOTAL]"
+                      name="MONTO_TOTAL"
+                      precision="10"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[TIPO_CAMBIO]"
+                      dataType="numeric"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[TIPO_CAMBIO]"
+                      name="TIPO_CAMBIO"
+                      precision="10"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[PCT_DESCUENTO]"
+                      dataType="numeric"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[PCT_DESCUENTO]"
+                      name="PCT_DESCUENTO"
+                      precision="10"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[PAGO_BS]"
+                      dataType="numeric"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[PAGO_BS]"
+                      name="PAGO_BS"
+                      precision="10"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[TOTAL_PAGAR_BS]"
+                      dataType="numeric"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[TOTAL_PAGAR_BS]"
+                      name="TOTAL_PAGAR_BS"
+                      precision="10"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de error de origen de OLE DB].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load FactVentas\Load FactVenta"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="Destino de OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;4"
+              description="Destino de OLE DB"
+              name="Load FactVenta"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Número de segundos antes de que se agote el tiempo de espera de un comando. Un valor de 0 indica un tiempo de espera infinito."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica el nombre del objeto de base de datos usado para abrir un conjunto de filas."
+                  name="OpenRowset">[dw].[FactVenta]</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica la variable que contiene el nombre del objeto de base de datos usado para abrir un conjunto de filas."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="Comando SQL para ejecutar."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica la página de códigos de columna para utilizar cuando la información de página de códigos no está disponible en el origen de datos."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Fuerza el uso del valor de la propiedad DefaultCodePage al describir datos de caracteres."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el modo utilizado para obtener acceso a la base de datos."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indica si los valores proporcionados para columnas de identidad se van a copiar al destino. Si es False, los valores de las columnas de identidad se generan automáticamente en el destino. Solo se aplica si está activada la carga rápida."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indica si las columnas que contienen NULL tendrán NULL insertado en el destino. Si es False, las columnas que contienen NULL tendrán sus valores predeterminados insertados en el destino. Solo se aplica si está activada la carga rápida."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica opciones para usar con la carga rápida. Solo se aplica si está activada la carga rápida."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica cuándo se emiten confirmaciones durante la inserción de datos. El valor 0 especifica que se emitirá una confirmación al final de la inserción de datos. Solo se aplica si está activada la carga rápida."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load FactVentas\Load FactVenta.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[target.DW_Ventas]"
+                  connectionManagerRefId="Package.ConnectionManagers[target.DW_Ventas]"
+                  description="La conexión de tiempo de ejecución OLE DB usada para obtener acceso a la base de datos."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB]"
+                  errorOrTruncationOperation="Insertar"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Entrada de destino de OLE DB">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].Columns[TiempoKey]"
+                      cachedDataType="i4"
+                      cachedName="TiempoKey"
+                      externalMetadataColumnId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[TiempoKey]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[TiempoKey]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].Columns[FECHA_VENTA]"
+                      cachedDataType="dbDate"
+                      cachedName="FECHA_VENTA"
+                      externalMetadataColumnId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[Fecha_venta]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[FECHA_VENTA]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].Columns[COD_VENTA]"
+                      cachedDataType="i8"
+                      cachedName="COD_VENTA"
+                      externalMetadataColumnId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[CodVentaNK]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[COD_VENTA]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].Columns[FactId]"
+                      cachedDataType="i8"
+                      cachedName="FactId"
+                      externalMetadataColumnId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[FacturaIdNK]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[FactId]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].Columns[NRO_VENTA]"
+                      cachedDataType="i4"
+                      cachedName="NRO_VENTA"
+                      externalMetadataColumnId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[NroVenta]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[NRO_VENTA]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].Columns[GLOSA]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="512"
+                      cachedName="GLOSA"
+                      externalMetadataColumnId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[GlosaVentaDD]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[GLOSA]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].Columns[CLIENTE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="256"
+                      cachedName="CLIENTE"
+                      externalMetadataColumnId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[ClienteTextoVentaDD]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[CLIENTE]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].Columns[nroFactura]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="128"
+                      cachedName="nroFactura"
+                      externalMetadataColumnId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[FacturaNroDD]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[nroFactura]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].Columns[nombreFactura]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="256"
+                      cachedName="nombreFactura"
+                      externalMetadataColumnId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[FacturaNombreDD]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[nombreFactura]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].Columns[glosaFactura]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="512"
+                      cachedName="glosaFactura"
+                      externalMetadataColumnId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[FacturaGlosaDD]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[glosaFactura]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].Columns[MontoTotalFactura]"
+                      cachedDataType="numeric"
+                      cachedName="MontoTotalFactura"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[FacturaMontoTotalDD]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[MontoTotalFactura]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].Columns[MONTO_TOTAL]"
+                      cachedDataType="numeric"
+                      cachedName="MONTO_TOTAL"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[MontoVentaCabecera]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[MONTO_TOTAL]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].Columns[TIPO_CAMBIO]"
+                      cachedDataType="numeric"
+                      cachedName="TIPO_CAMBIO"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[TipoCambio]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[TIPO_CAMBIO]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].Columns[PCT_DESCUENTO]"
+                      cachedDataType="numeric"
+                      cachedName="PCT_DESCUENTO"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[PctDescuento]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[PCT_DESCUENTO]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].Columns[PAGO_BS]"
+                      cachedDataType="numeric"
+                      cachedName="PAGO_BS"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[PagoBS]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[PAGO_BS]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].Columns[TOTAL_PAGAR_BS]"
+                      cachedDataType="numeric"
+                      cachedName="TOTAL_PAGAR_BS"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[TotalPagarBS]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[TOTAL_PAGAR_BS]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].Columns[SucursalKey]"
+                      cachedDataType="i4"
+                      cachedName="SucursalKey"
+                      externalMetadataColumnId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[SucursalKey]"
+                      lineageId="Package\Load FactVentas\Lookup Sucursal.Outputs[Salida de entradas coincidentes de búsqueda].Columns[SucursalKey]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].Columns[TipoPagoKey]"
+                      cachedDataType="i4"
+                      cachedName="TipoPagoKey"
+                      externalMetadataColumnId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[TipoPagoKey]"
+                      lineageId="Package\Load FactVentas\Lookup TipoPago.Outputs[Salida de entradas coincidentes de búsqueda].Columns[TipoPagoKey]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].Columns[TipoDocumentoKey]"
+                      cachedDataType="i4"
+                      cachedName="TipoDocumentoKey"
+                      externalMetadataColumnId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[TipoDocumentoKey]"
+                      lineageId="Package\Load FactVentas\Lookup TipoDocumento.Outputs[Salida de entradas coincidentes de búsqueda].Columns[TipoDocumentoKey]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].Columns[ClienteKey]"
+                      cachedDataType="i4"
+                      cachedName="ClienteKey"
+                      externalMetadataColumnId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[ClienteKey]"
+                      lineageId="Package\Load FactVentas\Lookup Cliente.Outputs[Salida de entradas coincidentes de búsqueda].Columns[ClienteKey]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].Columns[VendedorKey]"
+                      cachedDataType="i4"
+                      cachedName="VendedorKey"
+                      externalMetadataColumnId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[VendedorKey]"
+                      lineageId="Package\Load FactVentas\Lookup Vendedor.Outputs[Salida de entradas coincidentes de búsqueda].Columns[VendedorKey]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[CodVentaNK]"
+                      dataType="i8"
+                      name="CodVentaNK" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[FacturaIdNK]"
+                      dataType="i8"
+                      name="FacturaIdNK" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[TiempoKey]"
+                      dataType="i4"
+                      name="TiempoKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[SucursalKey]"
+                      dataType="i4"
+                      name="SucursalKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[TipoPagoKey]"
+                      dataType="i4"
+                      name="TipoPagoKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[TipoDocumentoKey]"
+                      dataType="i4"
+                      name="TipoDocumentoKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[VendedorKey]"
+                      dataType="i4"
+                      name="VendedorKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[ClienteKey]"
+                      dataType="i4"
+                      name="ClienteKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[NroVenta]"
+                      dataType="i4"
+                      name="NroVenta" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[GlosaVentaDD]"
+                      codePage="1252"
+                      dataType="str"
+                      length="512"
+                      name="GlosaVentaDD" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[ClienteTextoVentaDD]"
+                      codePage="1252"
+                      dataType="str"
+                      length="256"
+                      name="ClienteTextoVentaDD" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[Fecha_venta]"
+                      dataType="dbTimeStamp"
+                      name="Fecha_venta" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[FacturaNroDD]"
+                      codePage="1252"
+                      dataType="str"
+                      length="128"
+                      name="FacturaNroDD" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[FacturaNombreDD]"
+                      codePage="1252"
+                      dataType="str"
+                      length="256"
+                      name="FacturaNombreDD" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[FacturaGlosaDD]"
+                      codePage="1252"
+                      dataType="str"
+                      length="512"
+                      name="FacturaGlosaDD" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[FacturaMontoTotalDD]"
+                      dataType="numeric"
+                      name="FacturaMontoTotalDD"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[MontoVentaCabecera]"
+                      dataType="numeric"
+                      name="MontoVentaCabecera"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[TipoCambio]"
+                      dataType="numeric"
+                      name="TipoCambio"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[PctDescuento]"
+                      dataType="numeric"
+                      name="PctDescuento"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[PagoBS]"
+                      dataType="numeric"
+                      name="PagoBS"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB].ExternalColumns[TotalPagarBS]"
+                      dataType="numeric"
+                      name="TotalPagarBS"
+                      precision="10"
+                      scale="2" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load FactVentas\Load FactVenta.Outputs[Salida de error de destino de OLE DB]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de destino de OLE DB"
+                  synchronousInputId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Outputs[Salida de error de destino de OLE DB].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load FactVentas\Load FactVenta.Outputs[Salida de error de destino de OLE DB].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\Load FactVenta.Outputs[Salida de error de destino de OLE DB].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load FactVentas\Load FactVenta.Outputs[Salida de error de destino de OLE DB].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load FactVentas\Load stagginf"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="Destino de OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;4"
+              description="Destino de OLE DB"
+              name="Load stagginf"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Número de segundos antes de que se agote el tiempo de espera de un comando. Un valor de 0 indica un tiempo de espera infinito."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica el nombre del objeto de base de datos usado para abrir un conjunto de filas."
+                  name="OpenRowset">[staging].[factventas]</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica la variable que contiene el nombre del objeto de base de datos usado para abrir un conjunto de filas."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="Comando SQL para ejecutar."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica la página de códigos de columna para utilizar cuando la información de página de códigos no está disponible en el origen de datos."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Fuerza el uso del valor de la propiedad DefaultCodePage al describir datos de caracteres."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el modo utilizado para obtener acceso a la base de datos."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indica si los valores proporcionados para columnas de identidad se van a copiar al destino. Si es False, los valores de las columnas de identidad se generan automáticamente en el destino. Solo se aplica si está activada la carga rápida."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indica si las columnas que contienen NULL tendrán NULL insertado en el destino. Si es False, las columnas que contienen NULL tendrán sus valores predeterminados insertados en el destino. Solo se aplica si está activada la carga rápida."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica opciones para usar con la carga rápida. Solo se aplica si está activada la carga rápida."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica cuándo se emiten confirmaciones durante la inserción de datos. El valor 0 especifica que se emitirá una confirmación al final de la inserción de datos. Solo se aplica si está activada la carga rápida."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load FactVentas\Load stagginf.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[target.DW_Ventas]"
+                  connectionManagerRefId="Package.ConnectionManagers[target.DW_Ventas]"
+                  description="La conexión de tiempo de ejecución OLE DB usada para obtener acceso a la base de datos."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB]"
+                  errorOrTruncationOperation="Insertar"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Entrada de destino de OLE DB">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].Columns[TiempoKey]"
+                      cachedDataType="i4"
+                      cachedName="TiempoKey"
+                      externalMetadataColumnId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[TiempoKey]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[TiempoKey]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].Columns[FECHA_VENTA]"
+                      cachedDataType="dbDate"
+                      cachedName="FECHA_VENTA"
+                      externalMetadataColumnId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[Fecha_venta]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[FECHA_VENTA]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].Columns[COD_VENTA]"
+                      cachedDataType="i8"
+                      cachedName="COD_VENTA"
+                      externalMetadataColumnId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[CodVentaNK]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[COD_VENTA]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].Columns[FactId]"
+                      cachedDataType="i8"
+                      cachedName="FactId"
+                      externalMetadataColumnId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[FacturaIdNK]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[FactId]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].Columns[TOTAL_PAGAR_BS]"
+                      cachedDataType="numeric"
+                      cachedName="TOTAL_PAGAR_BS"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[TotalPagarBS]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[TOTAL_PAGAR_BS]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].Columns[PAGO_BS]"
+                      cachedDataType="numeric"
+                      cachedName="PAGO_BS"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[PagoBS]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[PAGO_BS]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].Columns[PCT_DESCUENTO]"
+                      cachedDataType="numeric"
+                      cachedName="PCT_DESCUENTO"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[PctDescuento]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[PCT_DESCUENTO]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].Columns[TIPO_CAMBIO]"
+                      cachedDataType="numeric"
+                      cachedName="TIPO_CAMBIO"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[TipoCambio]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[TIPO_CAMBIO]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].Columns[MontoTotalFactura]"
+                      cachedDataType="numeric"
+                      cachedName="MontoTotalFactura"
+                      cachedPrecision="18"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[FacturaMontoTotalDD]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[MontoTotalFactura]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].Columns[glosaFactura]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="512"
+                      cachedName="glosaFactura"
+                      externalMetadataColumnId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[FacturaGlosaDD]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[glosaFactura]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].Columns[nombreFactura]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="256"
+                      cachedName="nombreFactura"
+                      externalMetadataColumnId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[FacturaNombreDD]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[nombreFactura]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].Columns[nroFactura]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="128"
+                      cachedName="nroFactura"
+                      externalMetadataColumnId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[FacturaNroDD]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[nroFactura]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].Columns[GLOSA]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="512"
+                      cachedName="GLOSA"
+                      externalMetadataColumnId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[GlosaVentaDD]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[GLOSA]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].Columns[NRO_VENTA]"
+                      cachedDataType="i4"
+                      cachedName="NRO_VENTA"
+                      externalMetadataColumnId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[NroVenta]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[NRO_VENTA]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].Columns[CLIENTE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="256"
+                      cachedName="CLIENTE"
+                      externalMetadataColumnId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[ClienteTextoVentaDD]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[CLIENTE]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].Columns[MONTO_TOTAL]"
+                      cachedDataType="numeric"
+                      cachedName="MONTO_TOTAL"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[MontoVentaCabecera]"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[MONTO_TOTAL]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].Columns[SucursalKey]"
+                      cachedDataType="i4"
+                      cachedName="SucursalKey"
+                      externalMetadataColumnId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[SucursalKey]"
+                      lineageId="Package\Load FactVentas\Lookup Sucursal.Outputs[Salida de entradas coincidentes de búsqueda].Columns[SucursalKey]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].Columns[TipoPagoKey]"
+                      cachedDataType="i4"
+                      cachedName="TipoPagoKey"
+                      externalMetadataColumnId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[TipoPagoKey]"
+                      lineageId="Package\Load FactVentas\Lookup TipoPago.Outputs[Salida de entradas coincidentes de búsqueda].Columns[TipoPagoKey]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].Columns[TipoDocumentoKey]"
+                      cachedDataType="i4"
+                      cachedName="TipoDocumentoKey"
+                      externalMetadataColumnId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[TipoDocumentoKey]"
+                      lineageId="Package\Load FactVentas\Lookup TipoDocumento.Outputs[Salida de entradas coincidentes de búsqueda].Columns[TipoDocumentoKey]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].Columns[VendedorKey]"
+                      cachedDataType="i4"
+                      cachedName="VendedorKey"
+                      externalMetadataColumnId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[VendedorKey]"
+                      lineageId="Package\Load FactVentas\Lookup Vendedor.Outputs[Salida de entradas coincidentes de búsqueda].Columns[VendedorKey]" />
+                    <inputColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].Columns[ClienteKey]"
+                      cachedDataType="i4"
+                      cachedName="ClienteKey"
+                      externalMetadataColumnId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[ClienteKey]"
+                      lineageId="Package\Load FactVentas\Lookup Cliente.Outputs[Salida de entradas coincidentes de búsqueda].Columns[ClienteKey]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[CodVentaNK]"
+                      dataType="i8"
+                      name="CodVentaNK" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[FacturaIdNK]"
+                      dataType="i8"
+                      name="FacturaIdNK" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[TiempoKey]"
+                      dataType="i4"
+                      name="TiempoKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[SucursalKey]"
+                      dataType="i4"
+                      name="SucursalKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[TipoPagoKey]"
+                      dataType="i4"
+                      name="TipoPagoKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[TipoDocumentoKey]"
+                      dataType="i4"
+                      name="TipoDocumentoKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[VendedorKey]"
+                      dataType="i4"
+                      name="VendedorKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[ClienteKey]"
+                      dataType="i4"
+                      name="ClienteKey" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[NroVenta]"
+                      dataType="i4"
+                      name="NroVenta" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[GlosaVentaDD]"
+                      codePage="1252"
+                      dataType="str"
+                      length="512"
+                      name="GlosaVentaDD" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[ClienteTextoVentaDD]"
+                      codePage="1252"
+                      dataType="str"
+                      length="256"
+                      name="ClienteTextoVentaDD" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[Fecha_venta]"
+                      dataType="dbTimeStamp"
+                      name="Fecha_venta" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[FacturaNroDD]"
+                      codePage="1252"
+                      dataType="str"
+                      length="128"
+                      name="FacturaNroDD" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[FacturaNombreDD]"
+                      codePage="1252"
+                      dataType="str"
+                      length="256"
+                      name="FacturaNombreDD" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[FacturaGlosaDD]"
+                      codePage="1252"
+                      dataType="str"
+                      length="512"
+                      name="FacturaGlosaDD" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[FacturaMontoTotalDD]"
+                      dataType="numeric"
+                      name="FacturaMontoTotalDD"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[MontoVentaCabecera]"
+                      dataType="numeric"
+                      name="MontoVentaCabecera"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[TipoCambio]"
+                      dataType="numeric"
+                      name="TipoCambio"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[PctDescuento]"
+                      dataType="numeric"
+                      name="PctDescuento"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[PagoBS]"
+                      dataType="numeric"
+                      name="PagoBS"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB].ExternalColumns[TotalPagarBS]"
+                      dataType="numeric"
+                      name="TotalPagarBS"
+                      precision="10"
+                      scale="2" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load FactVentas\Load stagginf.Outputs[Salida de error de destino de OLE DB]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de destino de OLE DB"
+                  synchronousInputId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load FactVentas\Load stagginf.Outputs[Salida de error de destino de OLE DB].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load FactVentas\Load stagginf.Outputs[Salida de error de destino de OLE DB].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\Load stagginf.Outputs[Salida de error de destino de OLE DB].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load FactVentas\Load stagginf.Outputs[Salida de error de destino de OLE DB].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load FactVentas\Lookup Cliente"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Búsqueda;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;6"
+              description="Combina columnas adicionales con el flujo de datos mediante la búsqueda de valores en una tabla. Por ejemplo, se combina la columna 'id. de empleado' con la tabla de empleados para obtener la 'fecha de contratación' y 'el nombre de empleado'. Se recomienda esta transformación cuando hay suficiente espacio en memoria para la tabla de búsqueda."
+              name="Lookup Cliente"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Especifica la instrucción SQL que genera la tabla de búsqueda."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dw].[DimCliente]</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica una instrucción SQL que usa parámetros para generar la tabla de búsqueda."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dw].[DimCliente]) [refTable]
+where [refTable].[ClienteIdNK] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el tipo de conexión utilizado para tener acceso al conjunto de datos de referencia."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el tipo de caché de la tabla de búsqueda."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica cómo la transformación de búsquedas trata las filas sin entradas coincidentes en el conjunto de datos de referencia."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el porcentaje de la caché asignado a las filas sin entradas coincidentes en el conjunto de datos de referencia."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Uso de memoria máximo para la caché de referencia en una plataforma de 32 bits."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Uso de memoria máximo para la caché de referencia en una plataforma de 64 bits."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indica si se debe hacer referencia a metadatos en formato XML."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="ClienteKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ClienteIdNK" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CodigoCliente" dataType="DT_STR" length="10" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="RazonSocial" dataType="DT_STR" length="128" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="NombreComercial" dataType="DT_STR" length="128" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="TipoDocumento" dataType="DT_STR" length="6" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="NroDocumento" dataType="DT_STR" length="15" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Extension" dataType="DT_STR" length="5" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Direccion" dataType="DT_STR" length="128" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Nacionalidad" dataType="DT_STR" length="3" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Email" dataType="DT_STR" length="64" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Moneda" dataType="DT_STR" length="3" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="DiasPlazo" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Estado" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Especifica la lista de identificadores de linaje que están asignados a los parámetros que usa la instrucción SQL de la propiedad SQLCommand. Las entradas de la lista están separadas por puntos y comas."
+                  name="ParameterMap">#{Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[ClienteKey]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica la página de códigos de columna para utilizar cuando la información de página de códigos no está disponible en el origen de datos."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determina si las claves duplicadas de los datos de referencia se deben tratar como errores cuando se usa el modo de caché."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load FactVentas\Lookup Cliente.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[target.DW_Ventas]"
+                  connectionManagerRefId="Package.ConnectionManagers[target.DW_Ventas]"
+                  description="Administrador de conexiones utilizado para obtener acceso a los datos de búsqueda."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load FactVentas\Lookup Cliente.Inputs[Entrada de búsqueda]"
+                  name="Entrada de búsqueda">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load FactVentas\Lookup Cliente.Inputs[Entrada de búsqueda].Columns[ClienteKey]"
+                      cachedDataType="i8"
+                      cachedName="ClienteKey"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[ClienteKey]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Especifica la columna de la tabla de referencia con la que se combina una columna."
+                          name="JoinToReferenceColumn">ClienteIdNK</property>
+                        <property
+                          dataType="System.Null"
+                          description="Especifica la columna de la tabla de referencia de la que se copia una columna."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load FactVentas\Lookup Cliente.Outputs[Salida de entradas coincidentes de búsqueda]"
+                  errorOrTruncationOperation="Búsqueda"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Salida de entradas coincidentes de búsqueda"
+                  synchronousInputId="Package\Load FactVentas\Lookup Cliente.Inputs[Entrada de búsqueda]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load FactVentas\Lookup Cliente.Outputs[Salida de entradas coincidentes de búsqueda].Columns[ClienteKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copiar columna"
+                      lineageId="Package\Load FactVentas\Lookup Cliente.Outputs[Salida de entradas coincidentes de búsqueda].Columns[ClienteKey]"
+                      name="ClienteKey"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Especifica la columna de la tabla de referencia de la que se copia una columna."
+                          name="CopyFromReferenceColumn">ClienteKey</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load FactVentas\Lookup Cliente.Outputs[Salida de entradas no coincidentes de búsqueda]"
+                  description="Salida de búsqueda que trata las filas sin entradas coincidentes en el conjunto de datos de referencia. Utilice esta salida cuando la propiedad NoMatchBehavior esté establecida en 'Enviar las filas sin entradas coincidentes a la salida de entradas no coincidentes'."
+                  exclusionGroup="1"
+                  name="Salida de entradas no coincidentes de búsqueda"
+                  synchronousInputId="Package\Load FactVentas\Lookup Cliente.Inputs[Entrada de búsqueda]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load FactVentas\Lookup Cliente.Outputs[Salida de error de búsqueda]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de búsqueda"
+                  synchronousInputId="Package\Load FactVentas\Lookup Cliente.Inputs[Entrada de búsqueda]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load FactVentas\Lookup Cliente.Outputs[Salida de error de búsqueda].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load FactVentas\Lookup Cliente.Outputs[Salida de error de búsqueda].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\Lookup Cliente.Outputs[Salida de error de búsqueda].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load FactVentas\Lookup Cliente.Outputs[Salida de error de búsqueda].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load FactVentas\Lookup factVenta"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Búsqueda;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;6"
+              description="Combina columnas adicionales con el flujo de datos mediante la búsqueda de valores en una tabla. Por ejemplo, se combina la columna 'id. de empleado' con la tabla de empleados para obtener la 'fecha de contratación' y 'el nombre de empleado'. Se recomienda esta transformación cuando hay suficiente espacio en memoria para la tabla de búsqueda."
+              name="Lookup factVenta"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Especifica la instrucción SQL que genera la tabla de búsqueda."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dw].[FactVenta]</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica una instrucción SQL que usa parámetros para generar la tabla de búsqueda."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dw].[FactVenta]) [refTable]
+where [refTable].[CodVentaNK] = ? and [refTable].[FacturaIdNK] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el tipo de conexión utilizado para tener acceso al conjunto de datos de referencia."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el tipo de caché de la tabla de búsqueda."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica cómo la transformación de búsquedas trata las filas sin entradas coincidentes en el conjunto de datos de referencia."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el porcentaje de la caché asignado a las filas sin entradas coincidentes en el conjunto de datos de referencia."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Uso de memoria máximo para la caché de referencia en una plataforma de 32 bits."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Uso de memoria máximo para la caché de referencia en una plataforma de 64 bits."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indica si se debe hacer referencia a metadatos en formato XML."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="CodVentaNK" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FacturaIdNK" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="TiempoKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SucursalKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="TipoPagoKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="TipoDocumentoKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="VendedorKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ClienteKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="NroVenta" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="GlosaVentaDD" dataType="DT_STR" length="512" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="ClienteTextoVentaDD" dataType="DT_STR" length="256" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Fecha_venta" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FacturaNroDD" dataType="DT_STR" length="128" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="FacturaNombreDD" dataType="DT_STR" length="256" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="FacturaGlosaDD" dataType="DT_STR" length="512" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="FacturaMontoTotalDD" dataType="DT_NUMERIC" length="0" precision="18" scale="2" codePage="0"/&gt;&lt;referenceColumn name="MontoVentaCabecera" dataType="DT_NUMERIC" length="0" precision="10" scale="2" codePage="0"/&gt;&lt;referenceColumn name="TipoCambio" dataType="DT_NUMERIC" length="0" precision="10" scale="2" codePage="0"/&gt;&lt;referenceColumn name="PctDescuento" dataType="DT_NUMERIC" length="0" precision="10" scale="2" codePage="0"/&gt;&lt;referenceColumn name="PagoBS" dataType="DT_NUMERIC" length="0" precision="10" scale="2" codePage="0"/&gt;&lt;referenceColumn name="TotalPagarBS" dataType="DT_NUMERIC" length="0" precision="10" scale="2" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Especifica la lista de identificadores de linaje que están asignados a los parámetros que usa la instrucción SQL de la propiedad SQLCommand. Las entradas de la lista están separadas por puntos y comas."
+                  name="ParameterMap">#{Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[COD_VENTA]};#{Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[FactId]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica la página de códigos de columna para utilizar cuando la información de página de códigos no está disponible en el origen de datos."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determina si las claves duplicadas de los datos de referencia se deben tratar como errores cuando se usa el modo de caché."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load FactVentas\Lookup factVenta.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[target.DW_Ventas]"
+                  connectionManagerRefId="Package.ConnectionManagers[target.DW_Ventas]"
+                  description="Administrador de conexiones utilizado para obtener acceso a los datos de búsqueda."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load FactVentas\Lookup factVenta.Inputs[Entrada de búsqueda]"
+                  name="Entrada de búsqueda">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load FactVentas\Lookup factVenta.Inputs[Entrada de búsqueda].Columns[COD_VENTA]"
+                      cachedDataType="i8"
+                      cachedName="COD_VENTA"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[COD_VENTA]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Especifica la columna de la tabla de referencia con la que se combina una columna."
+                          name="JoinToReferenceColumn">CodVentaNK</property>
+                        <property
+                          dataType="System.Null"
+                          description="Especifica la columna de la tabla de referencia de la que se copia una columna."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Load FactVentas\Lookup factVenta.Inputs[Entrada de búsqueda].Columns[FactId]"
+                      cachedDataType="i8"
+                      cachedName="FactId"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[FactId]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Especifica la columna de la tabla de referencia con la que se combina una columna."
+                          name="JoinToReferenceColumn">FacturaIdNK</property>
+                        <property
+                          dataType="System.Null"
+                          description="Especifica la columna de la tabla de referencia de la que se copia una columna."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load FactVentas\Lookup factVenta.Outputs[Salida de entradas coincidentes de búsqueda]"
+                  errorOrTruncationOperation="Búsqueda"
+                  exclusionGroup="1"
+                  name="Salida de entradas coincidentes de búsqueda"
+                  synchronousInputId="Package\Load FactVentas\Lookup factVenta.Inputs[Entrada de búsqueda]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load FactVentas\Lookup factVenta.Outputs[Salida de entradas no coincidentes de búsqueda]"
+                  description="Salida de búsqueda que trata las filas sin entradas coincidentes en el conjunto de datos de referencia. Utilice esta salida cuando la propiedad NoMatchBehavior esté establecida en 'Enviar las filas sin entradas coincidentes a la salida de entradas no coincidentes'."
+                  exclusionGroup="1"
+                  name="Salida de entradas no coincidentes de búsqueda"
+                  synchronousInputId="Package\Load FactVentas\Lookup factVenta.Inputs[Entrada de búsqueda]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load FactVentas\Lookup factVenta.Outputs[Salida de error de búsqueda]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de búsqueda"
+                  synchronousInputId="Package\Load FactVentas\Lookup factVenta.Inputs[Entrada de búsqueda]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load FactVentas\Lookup factVenta.Outputs[Salida de error de búsqueda].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load FactVentas\Lookup factVenta.Outputs[Salida de error de búsqueda].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\Lookup factVenta.Outputs[Salida de error de búsqueda].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load FactVentas\Lookup factVenta.Outputs[Salida de error de búsqueda].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load FactVentas\Lookup Sucursal"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Búsqueda;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;6"
+              description="Combina columnas adicionales con el flujo de datos mediante la búsqueda de valores en una tabla. Por ejemplo, se combina la columna 'id. de empleado' con la tabla de empleados para obtener la 'fecha de contratación' y 'el nombre de empleado'. Se recomienda esta transformación cuando hay suficiente espacio en memoria para la tabla de búsqueda."
+              name="Lookup Sucursal"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Especifica la instrucción SQL que genera la tabla de búsqueda."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dw].[DimSucursal]</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica una instrucción SQL que usa parámetros para generar la tabla de búsqueda."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dw].[DimSucursal]) [refTable]
+where [refTable].[CodSucursalNK] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el tipo de conexión utilizado para tener acceso al conjunto de datos de referencia."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el tipo de caché de la tabla de búsqueda."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica cómo la transformación de búsquedas trata las filas sin entradas coincidentes en el conjunto de datos de referencia."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el porcentaje de la caché asignado a las filas sin entradas coincidentes en el conjunto de datos de referencia."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Uso de memoria máximo para la caché de referencia en una plataforma de 32 bits."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Uso de memoria máximo para la caché de referencia en una plataforma de 64 bits."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indica si se debe hacer referencia a metadatos en formato XML."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="SucursalKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CodSucursalNK" dataType="DT_STR" length="4" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Descripcion" dataType="DT_STR" length="256" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Direccion" dataType="DT_STR" length="500" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="NIT" dataType="DT_STR" length="15" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Telefono" dataType="DT_STR" length="20" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Email" dataType="DT_STR" length="40" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Activo" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Especifica la lista de identificadores de linaje que están asignados a los parámetros que usa la instrucción SQL de la propiedad SQLCommand. Las entradas de la lista están separadas por puntos y comas."
+                  name="ParameterMap">#{Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[SucursalKey]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica la página de códigos de columna para utilizar cuando la información de página de códigos no está disponible en el origen de datos."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determina si las claves duplicadas de los datos de referencia se deben tratar como errores cuando se usa el modo de caché."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load FactVentas\Lookup Sucursal.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[target.DW_Ventas]"
+                  connectionManagerRefId="Package.ConnectionManagers[target.DW_Ventas]"
+                  description="Administrador de conexiones utilizado para obtener acceso a los datos de búsqueda."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load FactVentas\Lookup Sucursal.Inputs[Entrada de búsqueda]"
+                  name="Entrada de búsqueda">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load FactVentas\Lookup Sucursal.Inputs[Entrada de búsqueda].Columns[SucursalKey]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="SucursalKey"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[SucursalKey]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Especifica la columna de la tabla de referencia con la que se combina una columna."
+                          name="JoinToReferenceColumn">CodSucursalNK</property>
+                        <property
+                          dataType="System.Null"
+                          description="Especifica la columna de la tabla de referencia de la que se copia una columna."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load FactVentas\Lookup Sucursal.Outputs[Salida de entradas coincidentes de búsqueda]"
+                  errorOrTruncationOperation="Búsqueda"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Salida de entradas coincidentes de búsqueda"
+                  synchronousInputId="Package\Load FactVentas\Lookup Sucursal.Inputs[Entrada de búsqueda]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load FactVentas\Lookup Sucursal.Outputs[Salida de entradas coincidentes de búsqueda].Columns[SucursalKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copiar columna"
+                      lineageId="Package\Load FactVentas\Lookup Sucursal.Outputs[Salida de entradas coincidentes de búsqueda].Columns[SucursalKey]"
+                      name="SucursalKey"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Especifica la columna de la tabla de referencia de la que se copia una columna."
+                          name="CopyFromReferenceColumn">SucursalKey</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load FactVentas\Lookup Sucursal.Outputs[Salida de entradas no coincidentes de búsqueda]"
+                  description="Salida de búsqueda que trata las filas sin entradas coincidentes en el conjunto de datos de referencia. Utilice esta salida cuando la propiedad NoMatchBehavior esté establecida en 'Enviar las filas sin entradas coincidentes a la salida de entradas no coincidentes'."
+                  exclusionGroup="1"
+                  name="Salida de entradas no coincidentes de búsqueda"
+                  synchronousInputId="Package\Load FactVentas\Lookup Sucursal.Inputs[Entrada de búsqueda]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load FactVentas\Lookup Sucursal.Outputs[Salida de error de búsqueda]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de búsqueda"
+                  synchronousInputId="Package\Load FactVentas\Lookup Sucursal.Inputs[Entrada de búsqueda]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load FactVentas\Lookup Sucursal.Outputs[Salida de error de búsqueda].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load FactVentas\Lookup Sucursal.Outputs[Salida de error de búsqueda].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\Lookup Sucursal.Outputs[Salida de error de búsqueda].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load FactVentas\Lookup Sucursal.Outputs[Salida de error de búsqueda].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load FactVentas\Lookup TipoDocumento"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Búsqueda;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;6"
+              description="Combina columnas adicionales con el flujo de datos mediante la búsqueda de valores en una tabla. Por ejemplo, se combina la columna 'id. de empleado' con la tabla de empleados para obtener la 'fecha de contratación' y 'el nombre de empleado'. Se recomienda esta transformación cuando hay suficiente espacio en memoria para la tabla de búsqueda."
+              name="Lookup TipoDocumento"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Especifica la instrucción SQL que genera la tabla de búsqueda."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dw].[DimTipoDocumento]</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica una instrucción SQL que usa parámetros para generar la tabla de búsqueda."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dw].[DimTipoDocumento]) [refTable]
+where [refTable].[CodTipoDocumentoNK] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el tipo de conexión utilizado para tener acceso al conjunto de datos de referencia."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el tipo de caché de la tabla de búsqueda."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica cómo la transformación de búsquedas trata las filas sin entradas coincidentes en el conjunto de datos de referencia."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el porcentaje de la caché asignado a las filas sin entradas coincidentes en el conjunto de datos de referencia."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Uso de memoria máximo para la caché de referencia en una plataforma de 32 bits."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Uso de memoria máximo para la caché de referencia en una plataforma de 64 bits."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indica si se debe hacer referencia a metadatos en formato XML."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="TipoDocumentoKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CodTipoDocumentoNK" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Sigla" dataType="DT_STR" length="4" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Descripcion" dataType="DT_STR" length="128" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Pago" dataType="DT_STR" length="16" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="GlosaTipoDoc" dataType="DT_STR" length="256" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Activo" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Especifica la lista de identificadores de linaje que están asignados a los parámetros que usa la instrucción SQL de la propiedad SQLCommand. Las entradas de la lista están separadas por puntos y comas."
+                  name="ParameterMap">#{Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[TipoDocumentoKey]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica la página de códigos de columna para utilizar cuando la información de página de códigos no está disponible en el origen de datos."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determina si las claves duplicadas de los datos de referencia se deben tratar como errores cuando se usa el modo de caché."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load FactVentas\Lookup TipoDocumento.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[target.DW_Ventas]"
+                  connectionManagerRefId="Package.ConnectionManagers[target.DW_Ventas]"
+                  description="Administrador de conexiones utilizado para obtener acceso a los datos de búsqueda."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load FactVentas\Lookup TipoDocumento.Inputs[Entrada de búsqueda]"
+                  name="Entrada de búsqueda">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load FactVentas\Lookup TipoDocumento.Inputs[Entrada de búsqueda].Columns[TipoDocumentoKey]"
+                      cachedDataType="i4"
+                      cachedName="TipoDocumentoKey"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[TipoDocumentoKey]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Especifica la columna de la tabla de referencia con la que se combina una columna."
+                          name="JoinToReferenceColumn">CodTipoDocumentoNK</property>
+                        <property
+                          dataType="System.Null"
+                          description="Especifica la columna de la tabla de referencia de la que se copia una columna."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load FactVentas\Lookup TipoDocumento.Outputs[Salida de entradas coincidentes de búsqueda]"
+                  errorOrTruncationOperation="Búsqueda"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Salida de entradas coincidentes de búsqueda"
+                  synchronousInputId="Package\Load FactVentas\Lookup TipoDocumento.Inputs[Entrada de búsqueda]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load FactVentas\Lookup TipoDocumento.Outputs[Salida de entradas coincidentes de búsqueda].Columns[TipoDocumentoKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copiar columna"
+                      lineageId="Package\Load FactVentas\Lookup TipoDocumento.Outputs[Salida de entradas coincidentes de búsqueda].Columns[TipoDocumentoKey]"
+                      name="TipoDocumentoKey"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Especifica la columna de la tabla de referencia de la que se copia una columna."
+                          name="CopyFromReferenceColumn">TipoDocumentoKey</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load FactVentas\Lookup TipoDocumento.Outputs[Salida de entradas no coincidentes de búsqueda]"
+                  description="Salida de búsqueda que trata las filas sin entradas coincidentes en el conjunto de datos de referencia. Utilice esta salida cuando la propiedad NoMatchBehavior esté establecida en 'Enviar las filas sin entradas coincidentes a la salida de entradas no coincidentes'."
+                  exclusionGroup="1"
+                  name="Salida de entradas no coincidentes de búsqueda"
+                  synchronousInputId="Package\Load FactVentas\Lookup TipoDocumento.Inputs[Entrada de búsqueda]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load FactVentas\Lookup TipoDocumento.Outputs[Salida de error de búsqueda]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de búsqueda"
+                  synchronousInputId="Package\Load FactVentas\Lookup TipoDocumento.Inputs[Entrada de búsqueda]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load FactVentas\Lookup TipoDocumento.Outputs[Salida de error de búsqueda].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load FactVentas\Lookup TipoDocumento.Outputs[Salida de error de búsqueda].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\Lookup TipoDocumento.Outputs[Salida de error de búsqueda].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load FactVentas\Lookup TipoDocumento.Outputs[Salida de error de búsqueda].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load FactVentas\Lookup TipoPago"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Búsqueda;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;6"
+              description="Combina columnas adicionales con el flujo de datos mediante la búsqueda de valores en una tabla. Por ejemplo, se combina la columna 'id. de empleado' con la tabla de empleados para obtener la 'fecha de contratación' y 'el nombre de empleado'. Se recomienda esta transformación cuando hay suficiente espacio en memoria para la tabla de búsqueda."
+              name="Lookup TipoPago"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Especifica la instrucción SQL que genera la tabla de búsqueda."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dw].[DimTipoPago]</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica una instrucción SQL que usa parámetros para generar la tabla de búsqueda."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dw].[DimTipoPago]) [refTable]
+where [refTable].[CodTipoPagoNK] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el tipo de conexión utilizado para tener acceso al conjunto de datos de referencia."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el tipo de caché de la tabla de búsqueda."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica cómo la transformación de búsquedas trata las filas sin entradas coincidentes en el conjunto de datos de referencia."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el porcentaje de la caché asignado a las filas sin entradas coincidentes en el conjunto de datos de referencia."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Uso de memoria máximo para la caché de referencia en una plataforma de 32 bits."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Uso de memoria máximo para la caché de referencia en una plataforma de 64 bits."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indica si se debe hacer referencia a metadatos en formato XML."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="TipoPagoKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CodTipoPagoNK" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Descripcion" dataType="DT_STR" length="128" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Activo" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Especifica la lista de identificadores de linaje que están asignados a los parámetros que usa la instrucción SQL de la propiedad SQLCommand. Las entradas de la lista están separadas por puntos y comas."
+                  name="ParameterMap">#{Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[TipoPagoKey]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica la página de códigos de columna para utilizar cuando la información de página de códigos no está disponible en el origen de datos."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determina si las claves duplicadas de los datos de referencia se deben tratar como errores cuando se usa el modo de caché."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load FactVentas\Lookup TipoPago.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[target.DW_Ventas]"
+                  connectionManagerRefId="Package.ConnectionManagers[target.DW_Ventas]"
+                  description="Administrador de conexiones utilizado para obtener acceso a los datos de búsqueda."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load FactVentas\Lookup TipoPago.Inputs[Entrada de búsqueda]"
+                  name="Entrada de búsqueda">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load FactVentas\Lookup TipoPago.Inputs[Entrada de búsqueda].Columns[TipoPagoKey]"
+                      cachedDataType="i4"
+                      cachedName="TipoPagoKey"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[TipoPagoKey]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Especifica la columna de la tabla de referencia con la que se combina una columna."
+                          name="JoinToReferenceColumn">CodTipoPagoNK</property>
+                        <property
+                          dataType="System.Null"
+                          description="Especifica la columna de la tabla de referencia de la que se copia una columna."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load FactVentas\Lookup TipoPago.Outputs[Salida de entradas coincidentes de búsqueda]"
+                  errorOrTruncationOperation="Búsqueda"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Salida de entradas coincidentes de búsqueda"
+                  synchronousInputId="Package\Load FactVentas\Lookup TipoPago.Inputs[Entrada de búsqueda]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load FactVentas\Lookup TipoPago.Outputs[Salida de entradas coincidentes de búsqueda].Columns[TipoPagoKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copiar columna"
+                      lineageId="Package\Load FactVentas\Lookup TipoPago.Outputs[Salida de entradas coincidentes de búsqueda].Columns[TipoPagoKey]"
+                      name="TipoPagoKey"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Especifica la columna de la tabla de referencia de la que se copia una columna."
+                          name="CopyFromReferenceColumn">TipoPagoKey</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load FactVentas\Lookup TipoPago.Outputs[Salida de entradas no coincidentes de búsqueda]"
+                  description="Salida de búsqueda que trata las filas sin entradas coincidentes en el conjunto de datos de referencia. Utilice esta salida cuando la propiedad NoMatchBehavior esté establecida en 'Enviar las filas sin entradas coincidentes a la salida de entradas no coincidentes'."
+                  exclusionGroup="1"
+                  name="Salida de entradas no coincidentes de búsqueda"
+                  synchronousInputId="Package\Load FactVentas\Lookup TipoPago.Inputs[Entrada de búsqueda]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load FactVentas\Lookup TipoPago.Outputs[Salida de error de búsqueda]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de búsqueda"
+                  synchronousInputId="Package\Load FactVentas\Lookup TipoPago.Inputs[Entrada de búsqueda]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load FactVentas\Lookup TipoPago.Outputs[Salida de error de búsqueda].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load FactVentas\Lookup TipoPago.Outputs[Salida de error de búsqueda].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\Lookup TipoPago.Outputs[Salida de error de búsqueda].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load FactVentas\Lookup TipoPago.Outputs[Salida de error de búsqueda].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load FactVentas\Lookup Vendedor"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Búsqueda;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;6"
+              description="Combina columnas adicionales con el flujo de datos mediante la búsqueda de valores en una tabla. Por ejemplo, se combina la columna 'id. de empleado' con la tabla de empleados para obtener la 'fecha de contratación' y 'el nombre de empleado'. Se recomienda esta transformación cuando hay suficiente espacio en memoria para la tabla de búsqueda."
+              name="Lookup Vendedor"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Especifica la instrucción SQL que genera la tabla de búsqueda."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dw].[DimVendedor]</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica una instrucción SQL que usa parámetros para generar la tabla de búsqueda."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dw].[DimVendedor]) [refTable]
+where [refTable].[CodUsuarioNK] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el tipo de conexión utilizado para tener acceso al conjunto de datos de referencia."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el tipo de caché de la tabla de búsqueda."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica cómo la transformación de búsquedas trata las filas sin entradas coincidentes en el conjunto de datos de referencia."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el porcentaje de la caché asignado a las filas sin entradas coincidentes en el conjunto de datos de referencia."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Uso de memoria máximo para la caché de referencia en una plataforma de 32 bits."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Uso de memoria máximo para la caché de referencia en una plataforma de 64 bits."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indica si se debe hacer referencia a metadatos en formato XML."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="VendedorKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CodUsuarioNK" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Usuario" dataType="DT_STR" length="50" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="CodEmpleadoNK" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CodigoEmpleado" dataType="DT_STR" length="10" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Nombres" dataType="DT_STR" length="50" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="Apellidos" dataType="DT_STR" length="50" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="DocumentoEmpleado" dataType="DT_STR" length="15" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="TipoEmpleado" dataType="DT_STR" length="1" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="CodRolNK" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="NombreRol" dataType="DT_STR" length="30" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="CodSucursalUsuario" dataType="DT_STR" length="4" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="ActivoUsuario" dataType="DT_UI1" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Especifica la lista de identificadores de linaje que están asignados a los parámetros que usa la instrucción SQL de la propiedad SQLCommand. Las entradas de la lista están separadas por puntos y comas."
+                  name="ParameterMap">#{Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[VendedorKey]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica la página de códigos de columna para utilizar cuando la información de página de códigos no está disponible en el origen de datos."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determina si las claves duplicadas de los datos de referencia se deben tratar como errores cuando se usa el modo de caché."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load FactVentas\Lookup Vendedor.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[target.DW_Ventas]"
+                  connectionManagerRefId="Package.ConnectionManagers[target.DW_Ventas]"
+                  description="Administrador de conexiones utilizado para obtener acceso a los datos de búsqueda."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load FactVentas\Lookup Vendedor.Inputs[Entrada de búsqueda]"
+                  name="Entrada de búsqueda">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load FactVentas\Lookup Vendedor.Inputs[Entrada de búsqueda].Columns[VendedorKey]"
+                      cachedDataType="i4"
+                      cachedName="VendedorKey"
+                      lineageId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB].Columns[VendedorKey]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Especifica la columna de la tabla de referencia con la que se combina una columna."
+                          name="JoinToReferenceColumn">CodUsuarioNK</property>
+                        <property
+                          dataType="System.Null"
+                          description="Especifica la columna de la tabla de referencia de la que se copia una columna."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load FactVentas\Lookup Vendedor.Outputs[Salida de entradas coincidentes de búsqueda]"
+                  errorOrTruncationOperation="Búsqueda"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Salida de entradas coincidentes de búsqueda"
+                  synchronousInputId="Package\Load FactVentas\Lookup Vendedor.Inputs[Entrada de búsqueda]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load FactVentas\Lookup Vendedor.Outputs[Salida de entradas coincidentes de búsqueda].Columns[VendedorKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copiar columna"
+                      lineageId="Package\Load FactVentas\Lookup Vendedor.Outputs[Salida de entradas coincidentes de búsqueda].Columns[VendedorKey]"
+                      name="VendedorKey"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Especifica la columna de la tabla de referencia de la que se copia una columna."
+                          name="CopyFromReferenceColumn">VendedorKey</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load FactVentas\Lookup Vendedor.Outputs[Salida de entradas no coincidentes de búsqueda]"
+                  description="Salida de búsqueda que trata las filas sin entradas coincidentes en el conjunto de datos de referencia. Utilice esta salida cuando la propiedad NoMatchBehavior esté establecida en 'Enviar las filas sin entradas coincidentes a la salida de entradas no coincidentes'."
+                  exclusionGroup="1"
+                  name="Salida de entradas no coincidentes de búsqueda"
+                  synchronousInputId="Package\Load FactVentas\Lookup Vendedor.Inputs[Entrada de búsqueda]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load FactVentas\Lookup Vendedor.Outputs[Salida de error de búsqueda]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de búsqueda"
+                  synchronousInputId="Package\Load FactVentas\Lookup Vendedor.Inputs[Entrada de búsqueda]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load FactVentas\Lookup Vendedor.Outputs[Salida de error de búsqueda].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load FactVentas\Lookup Vendedor.Outputs[Salida de error de búsqueda].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load FactVentas\Lookup Vendedor.Outputs[Salida de error de búsqueda].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load FactVentas\Lookup Vendedor.Outputs[Salida de error de búsqueda].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load FactVentas.Paths[Salida de entradas coincidentes de búsqueda]"
+              endId="Package\Load FactVentas\Lookup TipoPago.Inputs[Entrada de búsqueda]"
+              name="Salida de entradas coincidentes de búsqueda"
+              startId="Package\Load FactVentas\Lookup Sucursal.Outputs[Salida de entradas coincidentes de búsqueda]" />
+            <path
+              refId="Package\Load FactVentas.Paths[Salida de entradas coincidentes de búsqueda1]"
+              endId="Package\Load FactVentas\Lookup TipoDocumento.Inputs[Entrada de búsqueda]"
+              name="Salida de entradas coincidentes de búsqueda"
+              startId="Package\Load FactVentas\Lookup TipoPago.Outputs[Salida de entradas coincidentes de búsqueda]" />
+            <path
+              refId="Package\Load FactVentas.Paths[Salida de entradas coincidentes de búsqueda2]"
+              endId="Package\Load FactVentas\Lookup Cliente.Inputs[Entrada de búsqueda]"
+              name="Salida de entradas coincidentes de búsqueda"
+              startId="Package\Load FactVentas\Lookup TipoDocumento.Outputs[Salida de entradas coincidentes de búsqueda]" />
+            <path
+              refId="Package\Load FactVentas.Paths[Salida de entradas coincidentes de búsqueda3]"
+              endId="Package\Load FactVentas\Lookup Vendedor.Inputs[Entrada de búsqueda]"
+              name="Salida de entradas coincidentes de búsqueda"
+              startId="Package\Load FactVentas\Lookup Cliente.Outputs[Salida de entradas coincidentes de búsqueda]" />
+            <path
+              refId="Package\Load FactVentas.Paths[Salida de entradas coincidentes de búsqueda4]"
+              endId="Package\Load FactVentas\Lookup factVenta.Inputs[Entrada de búsqueda]"
+              name="Salida de entradas coincidentes de búsqueda"
+              startId="Package\Load FactVentas\Lookup Vendedor.Outputs[Salida de entradas coincidentes de búsqueda]" />
+            <path
+              refId="Package\Load FactVentas.Paths[Salida de entradas coincidentes de búsqueda5]"
+              endId="Package\Load FactVentas\Load stagginf.Inputs[Entrada de destino de OLE DB]"
+              name="Salida de entradas coincidentes de búsqueda"
+              startId="Package\Load FactVentas\Lookup factVenta.Outputs[Salida de entradas coincidentes de búsqueda]" />
+            <path
+              refId="Package\Load FactVentas.Paths[Salida de entradas no coincidentes de búsqueda]"
+              endId="Package\Load FactVentas\Load FactVenta.Inputs[Entrada de destino de OLE DB]"
+              name="Salida de entradas no coincidentes de búsqueda"
+              startId="Package\Load FactVentas\Lookup factVenta.Outputs[Salida de entradas no coincidentes de búsqueda]" />
+            <path
+              refId="Package\Load FactVentas.Paths[Salida de origen de OLE DB]"
+              endId="Package\Load FactVentas\Lookup Sucursal.Inputs[Entrada de búsqueda]"
+              name="Salida de origen de OLE DB"
+              startId="Package\Load FactVentas\get factVentas.Outputs[Salida de origen de OLE DB]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Sync values"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Tarea Ejecutar SQL"
+      DTS:DTSID="{DF57ED97-DCD4-4450-8689-0F69F152F1E3}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Sync values"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{01ED3FD9-2025-4F6E-A7D8-A4F7C4C48FC7}"
+          SQLTask:SqlStatementSource="EXECUTE [dbo].[DW_MergeFactVentas];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update Config"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Tarea Ejecutar SQL"
+      DTS:DTSID="{3A0458AB-58F9-4EDC-BDEA-BFBD15E51CD3}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update Config"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{01ED3FD9-2025-4F6E-A7D8-A4F7C4C48FC7}"
+          SQLTask:SqlStatementSource="EXECUTE [dbo].[UpdateLastPackageRowVersion] @tableName = 'FactVenta' ,@lastRowVersion = ?;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::DBTS"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Restricción]"
+      DTS:CreationName=""
+      DTS:DTSID="{2696C722-0A2F-48BD-A6B6-C443E3E0FB8E}"
+      DTS:From="Package\get database row version"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Restricción"
+      DTS:To="Package\get store row version" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Restricción 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{82B58EA9-4F58-4977-A556-BF10699A786E}"
+      DTS:From="Package\get store row version"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Restricción 1"
+      DTS:To="Package\clean staging area" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Restricción 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{72CAB631-E1CA-48F0-9235-483C65F41B50}"
+      DTS:From="Package\clean staging area"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Restricción 2"
+      DTS:To="Package\Load FactVentas" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Restricción 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{45182CEA-3EDE-49BB-B63A-FFD367127CE9}"
+      DTS:From="Package\Load FactVentas"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Restricción 3"
+      DTS:To="Package\Sync values" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Restricción 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{639F6831-FFA3-4246-AE7D-C3271DC37CC7}"
+      DTS:From="Package\Sync values"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Restricción 4"
+      DTS:To="Package\Update Config" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--Esta sección CDATA contiene la información de diseño del paquete. Esta sección incluye información como, por ejemplo, las coordenadas (x,y), el ancho y el alto.-->
+<!--Si edita manualmente esta sección y comete un error, puede eliminarlo. -->
+<!--El paquete podrá cargarse normalmente, pero se perderá la información de diseño anterior y el diseñador reorganizará los elementos automáticamente en la superficie de diseño.-->
+<Objects
+  Version="8">
+  <!--Cada uno de los nodos siguientes contiene propiedades que no afectan al comportamiento en tiempo de ejecución.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="169,42"
+          Id="Package\clean staging area"
+          TopLeft="275,267" />
+        <NodeLayout
+          Size="202,42"
+          Id="Package\get database row version"
+          TopLeft="256,100" />
+        <NodeLayout
+          Size="181,42"
+          Id="Package\get store row version"
+          TopLeft="267,181" />
+        <NodeLayout
+          Size="162,42"
+          Id="Package\Load FactVentas"
+          TopLeft="274,348" />
+        <NodeLayout
+          Size="138,42"
+          Id="Package\Sync values"
+          TopLeft="292,421" />
+        <NodeLayout
+          Size="149,42"
+          Id="Package\Update Config"
+          TopLeft="280,504" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Restricción]"
+          TopLeft="357.25,142">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39"
+              Start="0,0"
+              End="0,31.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Restricción 1]"
+          TopLeft="358.5,223">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44"
+              Start="0,0"
+              End="0,36.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Restricción 2]"
+          TopLeft="357.25,309">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39"
+              Start="0,0"
+              End="0,31.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Restricción 3]"
+          TopLeft="358,390">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,31"
+              Start="0,0"
+              End="0,23.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Restricción 4]"
+          TopLeft="357.75,463">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,41"
+              Start="0,0"
+              End="0,33.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load FactVentas">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="149,42"
+          Id="Package\Load FactVentas\get factVentas"
+          TopLeft="415,9" />
+        <NodeLayout
+          Size="161,42"
+          Id="Package\Load FactVentas\Lookup Sucursal"
+          TopLeft="410,91" />
+        <EdgeLayout
+          Id="Package\Load FactVentas.Paths[Salida de origen de OLE DB]"
+          TopLeft="490,51">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40"
+              Start="0,0"
+              End="0,32.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="165,42"
+          Id="Package\Load FactVentas\Lookup TipoPago"
+          TopLeft="413,178" />
+        <EdgeLayout
+          Id="Package\Load FactVentas.Paths[Salida de entradas coincidentes de búsqueda]"
+          TopLeft="493,133">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,45"
+              Start="0,0"
+              End="0,37.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-99.8190234375,12.65234375,199.638046875,12.1953125"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="196,42"
+          Id="Package\Load FactVentas\Lookup TipoDocumento"
+          TopLeft="391,265" />
+        <EdgeLayout
+          Id="Package\Load FactVentas.Paths[Salida de entradas coincidentes de búsqueda1]"
+          TopLeft="492.25,220">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,45"
+              Start="0,0"
+              End="0,37.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-99.8190234375,12.65234375,199.638046875,12.1953125"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="152,42"
+          Id="Package\Load FactVentas\Lookup Cliente"
+          TopLeft="409,338" />
+        <EdgeLayout
+          Id="Package\Load FactVentas.Paths[Salida de entradas coincidentes de búsqueda2]"
+          TopLeft="487,307">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,31"
+              Start="0,0"
+              End="0,23.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-99.8190234375,5.65234375,199.638046875,12.1953125"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="166,42"
+          Id="Package\Load FactVentas\Lookup Vendedor"
+          TopLeft="409,418" />
+        <EdgeLayout
+          Id="Package\Load FactVentas.Paths[Salida de entradas coincidentes de búsqueda3]"
+          TopLeft="488.5,380">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,38"
+              Start="0,0"
+              End="0,30.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-99.8190234375,9.15234375,199.638046875,12.1953125"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="164,42"
+          Id="Package\Load FactVentas\Lookup factVenta"
+          TopLeft="408.75,508.75" />
+        <EdgeLayout
+          Id="Package\Load FactVentas.Paths[Salida de entradas coincidentes de búsqueda4]"
+          TopLeft="491.375,460">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,48.75"
+              Start="0,0"
+              End="0,41.25">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41.25" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-99.8190234375,14.52734375,199.638046875,12.1953125"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="145,42"
+          Id="Package\Load FactVentas\Load stagginf"
+          TopLeft="190,585" />
+        <EdgeLayout
+          Id="Package\Load FactVentas.Paths[Salida de entradas coincidentes de búsqueda5]"
+          TopLeft="490.75,550.75">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-228.25,34.25"
+              Start="0,0"
+              End="-228.25,26.75">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13.125" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13.125"
+                    Point2="0,17.125"
+                    Point3="-4,17.125" />
+                  <mssgle:LineSegment
+                    End="-224.25,17.125" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-224.25,17.125"
+                    Point2="-228.25,17.125"
+                    Point3="-228.25,21.125" />
+                  <mssgle:LineSegment
+                    End="-228.25,26.75" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-213.9440234375,22.125,199.638046875,12.1953125"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="157,42"
+          Id="Package\Load FactVentas\Load FactVenta"
+          TopLeft="667.142857142857,595.714285714286" />
+        <EdgeLayout
+          Id="Package\Load FactVentas.Paths[Salida de entradas no coincidentes de búsqueda]"
+          TopLeft="516.75,550.75">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="228.892857142857,44.9642857142857"
+              Start="0,0"
+              End="228.892857142857,37.4642857142857">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.2463768115942" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.2463768115942"
+                    Point2="0,18.2463768115942"
+                    Point3="4,18.2463768115942" />
+                  <mssgle:LineSegment
+                    End="224.892857142857,18.2463768115942" />
+                  <mssgle:CubicBezierSegment
+                    Point1="224.892857142857,18.2463768115942"
+                    Point2="228.892857142857,18.2463768115942"
+                    Point3="228.892857142857,22.2463768115942" />
+                  <mssgle:LineSegment
+                    End="228.892857142857,37.4642857142857" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="7.5574051339285,23.2463768115942,213.778046875,12.1953125"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load FactVentas\get factVentas">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load FactVentas\Lookup Sucursal">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dw].[DimSucursal]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load FactVentas\Lookup TipoPago">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dw].[DimTipoPago]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load FactVentas\Lookup TipoDocumento">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dw].[DimTipoDocumento]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load FactVentas\Lookup Cliente">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dw].[DimCliente]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load FactVentas\Lookup Vendedor">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dw].[DimVendedor]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load FactVentas\Lookup factVenta">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dw].[FactVenta]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load FactVentas\Load stagginf">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load FactVentas\Load FactVenta">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
